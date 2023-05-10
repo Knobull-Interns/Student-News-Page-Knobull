@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-history-api-fallback": "^1.6.0",
+    "cors": "^2.8.5",
+    "csprng": "^0.1.2",
+    "express": "^5.0.0-alpha.7",
+    "express-jwt": "^8.4.1",
+    "formidable": "^2.1.1",
+    "http-assert": "^1.4.1",
+    "inflection": "^1.12.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.4",
+    "multer": "^1.4.2",
+    "multer-aliyun-oss": "^1.0.4",
+    "nodemon": "^2.0.22",
+    "require-all": "^3.0.0",
+    "sha1": "^1.1.1"
+  }
+}
