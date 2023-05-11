@@ -3,11 +3,14 @@
 Design and build a backend for news page for student
 
 1. Define requirements:
-
-• Identify the main features and requirements for the backend. These may include user authentication, article management (create, edit, delete), and real-time updates.
-
+   • Build a student news page website that will async into the Knobull app. 
+   • Identify the main features and requirements for the backend. These may include user authentication, article management (create, edit, delete), and real-time updates.
+   • Manage news in different categories (refer to U.S News)
+   • News Subscrition feature(if a student wants to view certain articles, the student needs to subsribe and pay)
+   • two ends, one for mamagement and another one for user.
+   
 2. Choose a technology stack:
-   • Select the programming languages, frameworks, and tools for building the backend. Consider factors like performance, ease of use, and community support.
+   • MERN (MongoDB, Express, React.js, Node.js)
 
 3. Design the database schema:
    • Plan the database structure, including tables and relationships between them. For a student news page, you might have tables like users, articles, and categories.
