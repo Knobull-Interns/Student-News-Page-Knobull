@@ -46,7 +46,7 @@ router.post('/api/login', (req, res) => {
       if (req.body.type === 'user') {
         // 用户登录
         if (obj[req.body.name] !== req.body.code) {
-          res.status(200).send({ status: 1, message: '手机验证码不正确' })
+          res.status(200).send({ status: 1, message: 'The verification code of the mobile phone is incorrect' })
           return
         }
         const salt = doc.salt
@@ -64,7 +64,7 @@ router.post('/api/login', (req, res) => {
         } else {
           res.status(200).send({
             status: 1,
-            message: '密码不正确'
+            message: 'Incorrect password'
           })
         }
       } else {
@@ -73,13 +73,13 @@ router.post('/api/login', (req, res) => {
         if (doc.userType !== 1) {
           res.status(200).send({
             status: 1,
-            message: '该用户不是管理员'
+            message: 'The user is not an administrator'
           })
         } else if (doc.password === sha1(req.body.password + salt)) {
           const token = createToken(doc._id, doc.name)
           res.status(200).send({
             status: 0,
-            message: '登录成功',
+            message: 'Login success',
             token,
             data: {
               account: doc.name,
@@ -103,7 +103,7 @@ router.post('/api/login', (req, res) => {
         } else {
           res.status(200).send({
             status: 1,
-            message: '密码不正确'
+            message: 'Incorrect password'
           })
         }
       }
@@ -111,7 +111,7 @@ router.post('/api/login', (req, res) => {
       if (req.body.type === 'user') {
         // 用户登录
         if (obj[req.body.name] !== req.body.code) {
-          res.status(200).send({ status: 1, message: '手机验证码不正确' })
+          res.status(200).send({ status: 1, message: 'The verification code of the mobile phone is incorrect' })
           return
         }
         const salt = rand(160, 36)
@@ -140,7 +140,7 @@ router.post('/api/login', (req, res) => {
       } else {
         res.status(200).send({
           status: 1,
-          message: '不存在该管理员账号'
+          message: 'The administrator account does not exist'
         })
       }
     }
