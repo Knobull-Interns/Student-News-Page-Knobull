@@ -15,7 +15,9 @@ app.use(express.static(__dirname + '/public'))
 app.use(jwt({ secret, algorithms: ['HS256'] }).unless({ path: ['/api/login', '/api/getPhoneCode'] }))
 
 app.use((err, req, res, next) => {
-  console.log(req)
+  if (req.originalUrl.indexOf('api') === -1) {
+    next()
+  }
   if (err.name === 'UnauthorizedError') {
     return res.send({
       status: 401,

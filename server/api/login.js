@@ -182,8 +182,10 @@ router.post('/api/upload', (req, res) => {
   form.uploadDir = path.join(__dirname, '../public') // 上传图片放置的文件夹
   form.keepExtensions = true
   form.parse(req, (err, fields, files) => {
-    const index = files.file.path.lastIndexOf('\\')
-    const imgUrl = `http://localhost:3003/${files.file.path.substring(index + 1)}`
+    console.log(files.files.originalFilename.substring(files.files.originalFilename.lastIndexOf('.') + 1))
+    const index = files.files.filepath.lastIndexOf('\\')
+    const fileType = files.files.originalFilename.substring(files.files.originalFilename.lastIndexOf('.') + 1)
+    const imgUrl = `http://localhost:3003/${files.files.filepath.substring(index + 1)}.${fileType}`
     res.status(200).send({ message: imgUrl })
   })
 })

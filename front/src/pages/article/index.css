@@ -1,0 +1,35 @@
+.powermenu-container {
+  padding: 20px;
+}
+.powermenu-container .tree-data .ant-tree-node-content-wrapper,
+.powermenu-container .tree-data .ant-tree-switcher {
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
+.powermenu-container .tree-data .ant-tree-node-content-wrapper .ant-tree-iconEle,
+.powermenu-container .tree-data .ant-tree-switcher .ant-tree-iconEle {
+  line-height: inherit;
+}
+.powermenu-container .preview svg {
+  width: 20px;
+  height: 20px;
+}
+.powermenu-container .type-tag {
+  margin-bottom: 5px;
+}
+.powermenu-container .top-form {
+  margin-bottom: 20px;
+}
+.powermenu-container .top-form .ant-btn {
+  margin-right: 10px;
+}
+.user-container,
+.type-container {
+  padding: 20px;
+}
+.index-form {
+  width: 800px;
+  margin: 0 auto;
+  padding-top: 50px;
+}

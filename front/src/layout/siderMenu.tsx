@@ -66,12 +66,13 @@ const SiderMenu = () => {
   const openKeys = useStateOpenMenuKey()
   const selectedKeys = useStateSelectMenuKey()
   const layout = useStateLayout()
-  const menuList = useStateMenuList()
+  const menuList = filterData(useStateMenuList())
   const { styles } = useStyle()
   // 菜单组折叠
   const { stateSetOpenMenuKey: onOpenChange } = useDispatchMenu()
 
   // 菜单选项
+  console.log(menuList)
   const menuComponent = useMemo(() => menuList.map(m => renderMenu(m, '')), [menuList]);
 
   const WrapContainer = useMemo(() => layout === layoutTypes.SINGLE_COLUMN ? FlexBox : SliderContent, [layout])
@@ -93,6 +94,18 @@ const SiderMenu = () => {
     }
     return "inline"
   }, [layout])
+
+
+  function filterData(arr) {
+    return arr.filter(item => {
+      if (item.children) {
+        item.children = filterData(item.children)
+      }
+      if (!item.hidden) {
+        return true
+      }
+    })
+  }
 
   return <WrapContainer>
     <Menu

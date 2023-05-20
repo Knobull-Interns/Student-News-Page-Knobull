@@ -28,6 +28,7 @@ const getClassificationDetail = (data: any) => request.get("/categoryInfo", data
 const addClassification = (data: any) => request.post("/category", data) as Promise<ResponseData>;
 const editClassification = (data: any) => request.post("/editCategory", data) as Promise<ResponseData>;
 const deleteClassification = (data: any) => request.get("/deleteCategory", data) as Promise<ResponseData>;
+const uploadImage = (data: any) => request.post("/upload", data, {headers: { "content-type": "multipart/form-data" }}) as Promise<ResponseData>;
 
 export const getFeedBack = (data: any) => request.post("/getfeedback", data) as Promise<ResponseData>;
 export const reply = (data: any) => request.post("/reply", data) as Promise<ResponseData>;
@@ -54,6 +55,7 @@ export {
   addClassification,
   editClassification,
   deleteClassification,
+  uploadImage,
 
   addType,
   getMenuList
