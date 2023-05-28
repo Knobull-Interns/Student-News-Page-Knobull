@@ -5,7 +5,6 @@ import { MessageAPi, ResponseData, LoginApi, PowerApi, MenuInfoApi, UserListApi,
 const request = import.meta.env.REACT_APP_MOCK === "1" ? mock : ajax;
 
 const getMenu = () => request.get("/getmenu") as Promise<MenuResponse>;
-const getMenuList = () => request.get("/getmenulist") as Promise<MenuListResponse>;
 const login = (data: any) => request.post("/login", data) as Promise<LoginApi>;
 const addMenu = (data: any) => request.post("/addmenu", data) as Promise<ResponseData>;
 const addMsg = (data: any) => request.post("/addmessage", data) as Promise<ResponseData>;
@@ -23,12 +22,18 @@ const editUser = (data: any) => request.post("/edituserinfo", data) as Promise<R
 const editType = (data: any) => request.post("/edittype", data) as Promise<ResponseData>;
 const addType = (data: any) => request.post("/addtype", data) as Promise<ResponseData>;
 
+
 const getClassificationList = () => request.get("/category") as Promise<any>;
 const getClassificationDetail = (data: any) => request.get("/categoryInfo", data) as Promise<any>;
 const addClassification = (data: any) => request.post("/category", data) as Promise<ResponseData>;
 const editClassification = (data: any) => request.post("/editCategory", data) as Promise<ResponseData>;
 const deleteClassification = (data: any) => request.get("/deleteCategory", data) as Promise<ResponseData>;
 const uploadImage = (data: any) => request.post("/upload", data, {headers: { "content-type": "multipart/form-data" }}) as Promise<ResponseData>;
+const addArticle = (data: any) => request.post("/article", data) as Promise<ResponseData>;
+const editArticle = (data: any) => request.post("/editArticle", data) as Promise<ResponseData>;
+const getArticleList = (data: any) => request.get("/articles", data) as Promise<UserListApi>;
+const deleteArticle = (data: any) => request.get("/deleteArticle", data) as Promise<ResponseData>;
+const getArticleDetail = (data: any) => request.get("/getArticleDetail", data) as Promise<ResponseData>;
 
 export const getFeedBack = (data: any) => request.post("/getfeedback", data) as Promise<ResponseData>;
 export const reply = (data: any) => request.post("/reply", data) as Promise<ResponseData>;
@@ -49,6 +54,7 @@ export {
   getUser,
   editUser,
   editType,
+  addType,
 
   getClassificationList,
   getClassificationDetail,
@@ -56,7 +62,10 @@ export {
   editClassification,
   deleteClassification,
   uploadImage,
+  addArticle,
+  editArticle,
+  getArticleList,
+  deleteArticle,
+  getArticleDetail,
 
-  addType,
-  getMenuList
 };

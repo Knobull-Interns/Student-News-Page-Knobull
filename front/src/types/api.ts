@@ -56,10 +56,7 @@ export type ResponseUserInfo = {
   username: string
 }
 export interface UserListApi extends ResponseData {
-  data: {
-    list: ResponseUserInfo[]
-    mapKey: MapKey
-  }
+  data: any[]
   total: number
 }
 

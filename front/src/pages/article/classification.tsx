@@ -56,7 +56,6 @@ export default function User() {
   // 显示弹窗
   const showInfoModal = (id: string, type: boolean) => {
     if (id) {
-      console.log(id)
       setId(id)
     } else {
       setId(null)

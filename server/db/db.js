@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const sha1 = require('sha1')
 const rand = require('csprng')
-const Sequence = require('./sequence')
+// const Sequence = require('./sequence')
 
 const UserSchema = new Schema(
   {
@@ -26,31 +26,18 @@ const CategorySchema = new Schema(
 
 const ArticleSchema = new Schema(
   {
-    aid: { type: Number, index: { unique: true } },
     title: String,
+    desc: String,
+    categoryId: {
+      ref: 'Category',
+      type: Schema.Types.ObjectId
+    },
+    charge: Number,
+    banner: String,
     content: String,
-    category: String,
-    tags: [String],
-    date: Date,
-    isPublish: Boolean,
-    comment_n: Number
   },
   { versionKey: false }
 )
-
-// 生成从0开始自增长的文章aid
-ArticleSchema.pre('save', function (next) {
-  var self = this
-  if (self.isNew) {
-    Sequence.increment('Article', function (err, result) {
-      if (err) throw err
-      self.aid = result.value.next
-      next()
-    })
-  } else {
-    next()
-  }
-})
 
 const Models = {
   User: mongoose.model('User', UserSchema),

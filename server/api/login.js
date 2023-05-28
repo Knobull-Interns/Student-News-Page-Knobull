@@ -7,6 +7,7 @@ const sha1 = require('sha1')
 const rand = require('csprng')
 const formidable = require('formidable')
 const path = require('path')
+const fs = require('fs')
 
 const createToken = (id, name) => {
   return 'Bearer ' + jwt.sign(
@@ -182,11 +183,17 @@ router.post('/api/upload', (req, res) => {
   form.uploadDir = path.join(__dirname, '../public') // 上传图片放置的文件夹
   form.keepExtensions = true
   form.parse(req, (err, fields, files) => {
-    console.log(files.files.originalFilename.substring(files.files.originalFilename.lastIndexOf('.') + 1))
     const index = files.files.filepath.lastIndexOf('\\')
+    const fileName = files.files.filepath.substring(index + 1)
     const fileType = files.files.originalFilename.substring(files.files.originalFilename.lastIndexOf('.') + 1)
-    const imgUrl = `http://localhost:3003/${files.files.filepath.substring(index + 1)}.${fileType}`
-    res.status(200).send({ message: imgUrl })
+    const imgUrl = `http://127.0.0.1:3003/${fileName}.${fileType}`
+    fs.rename(form.uploadDir + '\\' + fileName, form.uploadDir + `\\${fileName}.${fileType}`, err => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.status(200).send({ message: imgUrl })
+      }
+    })
   })
 })
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./index.less";
 import {
   Form,
@@ -17,9 +17,9 @@ import {
 import type { UploadChangeParam } from 'antd/es/upload';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatchLayout } from "@/store/hooks";
-import { getClassificationList, uploadImage } from '@/api'
+import { getClassificationList, uploadImage, addArticle, getArticleDetail, editArticle } from '@/api'
 import Editor from '@/components/editor'
 const { Option } = Select;
 const formItemLayout = {
@@ -62,13 +62,13 @@ const getBase64 = (img: RcFile, callback: (url: string) => void) => {
 function RegistrationForm() {
   const [form] = Form.useForm();
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { stateChangeLayout } = useDispatchLayout()
   const [articleClassification, setArticleClassification] = useState([])
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({
-    banner: '',
-    content: ''
-  })
+  const [banner, setBanner] = useState('')
+  const [content, setContent] = useState('')
+  const myEditor = useRef()
   useEffect(() => {
     getClassificationList().then(res => {
       setArticleClassification(res.data.map(item => ({
@@ -76,13 +76,34 @@ function RegistrationForm() {
         label: item.name
       })))
     })
+    if (searchParams.get('id')) {
+      getArticleDetail({ id: searchParams.get('id') }).then(res => {
+        form.setFieldsValue(res.data)
+        setBanner(res.data.banner)
+        setContent(res.data.content)
+        myEditor.current.setHtml(res.data.content)
+      })
+    }
     return () => {
       stateChangeLayout("pop")
     }
   }, [])
 
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+    const params = {
+      ...values,
+      id: searchParams.get('id'),
+      banner,
+      content
+    }
+    const api = params.id ? editArticle : addArticle
+    console.log(params)
+    api(params).then(res => {
+      if (res.status === 0) {
+        message.success(`succeed in ${params.id ? 'edit' : 'saving new'} article!`);
+        back()
+      }
+    })
   };
   const back = () => {
     navigate(-1)
@@ -112,10 +133,7 @@ function RegistrationForm() {
     fmData.append("files", file);
     try {
       const res = await uploadImage(fmData);
-      setData({
-        banner: res.message
-      })
-      console.log(data)
+      setBanner(res.message)
       onSuccess(res);
     } catch (err) {
       const error = new Error("Some error");
@@ -143,9 +161,7 @@ function RegistrationForm() {
   );
 
   function editorChange(e) {
-    setData({
-      content: e
-    })
+    setContent(e)
   }
 
   return (
@@ -156,7 +172,6 @@ function RegistrationForm() {
         name="register"
         onFinish={onFinish}
         className="index-form"
-        initialValues={data}
         scrollToFirstError
       >
         <Form.Item
@@ -169,18 +184,18 @@ function RegistrationForm() {
             },
           ]}
         >
-          <Input onChange={(e) => setData({ title: e.target.value })} />
+          <Input />
         </Form.Item>
 
         <Form.Item
-          name="articleDesc"
+          name="desc"
           label="ArticleDesc"
         >
-          <Input onChange={(e) => setData({ articleDesc: e.target.value })} />
+          <Input />
         </Form.Item>
 
         <Form.Item
-          name="classification"
+          name="categoryId"
           label="Article Classification"
           rules={[
             {
@@ -192,7 +207,6 @@ function RegistrationForm() {
           <Select
             style={{ width: 200 }}
             options={articleClassification}
-            onChange={(e) => setData({ classification: e })}
           />
         </Form.Item>
         <Form.Item
@@ -220,7 +234,7 @@ function RegistrationForm() {
             onChange={handleChange}
             customRequest={handleUpload}
           >
-            {data.banner ? <img src={data.banner} alt="banner" style={{ width: '100%' }} /> : uploadButton}
+            {banner ? <img src={banner} alt="banner" style={{ width: '100%' }} /> : uploadButton}
           </Upload>
         </Form.Item>
 
@@ -228,12 +242,12 @@ function RegistrationForm() {
           name="content"
           label="Content"
         >
-          <Editor onChange={editorChange} />
+          <Editor ref={myEditor} onChange={editorChange} />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Add Article
+            Submit
           </Button>
           <Button danger onClick={back} type='link'>
             返回上一页
