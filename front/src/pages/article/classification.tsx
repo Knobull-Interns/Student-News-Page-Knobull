@@ -106,4 +106,4 @@ export default function User() {
   )
 }
 
-User.route = { [MENU_PATH]: '/articleManagement/articleClassification' }
+User.route = { [MENU_PATH]: '/admin/articleManagement/articleClassification' }

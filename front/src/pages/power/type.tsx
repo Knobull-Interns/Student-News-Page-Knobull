@@ -104,4 +104,4 @@ export default function Types() {
   );
 }
 
-Types.route = { [MENU_PATH]: "/power/type" };
+Types.route = { [MENU_PATH]: "/admin/power/type" };

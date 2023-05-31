@@ -88,4 +88,4 @@ export default function User() {
   );
 }
 
-User.route = { [MENU_PATH]: "/userManagement" };
+User.route = { [MENU_PATH]: "/admin/userManagement" };

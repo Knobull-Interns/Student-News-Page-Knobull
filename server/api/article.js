@@ -85,14 +85,16 @@ router.get('/api/articles', (req, res) => {
   const page = req.query.page
   const limit = req.query.pageSize || 10
   const skip = limit * (page - 1)
-  db.Article.find()
-      .sort({ date: -1 })
+  const params = {}
+  if (req.query.categoryId) {
+    params.categoryId = req.query.categoryId
+  }
+  db.Article.find(params)
       .populate('categoryId')
-      .limit(limit)
+      .limit(limit * 1)
       .skip(skip)
-      .exec()
       .then(async articles => {
-        const count = await db.Article.count()
+        const count = await db.Article.find(params).count()
         res.send({ status: 0, total: count, data: articles })
       })
 })

@@ -18,7 +18,7 @@ app.use(jwt({ secret, algorithms: ['HS256'] }).unless({ path: ['/api/login', '/a
 
 app.use((err, req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
-  if (req.originalUrl.indexOf('api') === -1) {
+  if (req.originalUrl.indexOf('api') === -1 || res.req.rawHeaders.filter(item => item.indexOf('/front') !== -1).length > 0) {
     return next()
   }
   if (err.name === 'UnauthorizedError') {

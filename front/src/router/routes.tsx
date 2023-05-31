@@ -2,7 +2,7 @@ export default [
   {
     menu_id: 1,
     title: 'articleManagement',
-    path: '/articleManagement',
+    path: '/admin/articleManagement',
     key: 'articleManagement',
     parentKey: '',
     icon: 'icon_edit',
@@ -43,10 +43,43 @@ export default [
   {
     menu_id: 2,
     title: 'userManagement',
-    path: '/userManagement',
+    path: '/admin/userManagement',
     key: 'userManagement',
     parentKey: '',
     icon: 'icon_infopersonal',
+    keepAlive: 'false',
+    order: 2
+  },
+  {
+    menu_id: 3,
+    title: 'font',
+    path: '/front',
+    key: 'font',
+    parentKey: '',
+    icon: '',
+    hidden: true,
+    keepAlive: 'false',
+    order: 3
+  },
+  {
+    menu_id: 31,
+    title: 'home',
+    path: '/home',
+    key: 'home',
+    parentKey: 'font',
+    icon: '',
+    hidden: true,
+    keepAlive: 'false',
+    order: 1
+  },
+  {
+    menu_id: 32,
+    title: 'articleDetail',
+    path: '/articleDetail',
+    key: 'articleDetail',
+    parentKey: 'font',
+    icon: '',
+    hidden: true,
     keepAlive: 'false',
     order: 2
   }

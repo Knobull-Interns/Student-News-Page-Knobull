@@ -97,7 +97,6 @@ function RegistrationForm() {
       content
     }
     const api = params.id ? editArticle : addArticle
-    console.log(params)
     api(params).then(res => {
       if (res.status === 0) {
         message.success(`succeed in ${params.id ? 'edit' : 'saving new'} article!`);
@@ -261,6 +260,6 @@ function RegistrationForm() {
 export default RegistrationForm;
 
 RegistrationForm.route = {
-  [MENU_PATH]: "/articleManagement/updateArticle",
+  [MENU_PATH]: "/admin/articleManagement/updateArticle",
   [MENU_LAYOUT]: 'FULLSCREEN'
 };

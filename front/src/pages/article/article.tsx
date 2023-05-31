@@ -140,4 +140,4 @@ export default function Article() {
   );
 }
 
-Article.route = { [MENU_PATH]: "/articleManagement/article" };
+Article.route = { [MENU_PATH]: "/admin/articleManagement/article" };
