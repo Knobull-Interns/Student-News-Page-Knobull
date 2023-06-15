@@ -75,7 +75,7 @@ function Intercept({ menuList, components, [MENU_TITLE]: title, [MENU_PATH]: pag
     (m) => (m[MENU_PARENTPATH] || "") + m[MENU_PATH] === pagePath
   );
 
-  if (hasPath && pagePath !== "/" && pagePath !== "*") {
+  if (hasPath && pagePath !== "/" && pagePath !== "/admin" && pagePath !== "*") {
     return (
       <Error
         status="403"

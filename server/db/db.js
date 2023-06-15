@@ -39,10 +39,19 @@ const ArticleSchema = new Schema(
   { versionKey: false }
 )
 
+const PaySchema = new Schema(
+  {
+    userId: String,
+    articleId: String
+  },
+  { versionKey: false }
+)
+
 const Models = {
   User: mongoose.model('User', UserSchema),
   Article: mongoose.model('Article', ArticleSchema),
-  Category: mongoose.model('Category', CategorySchema)
+  Category: mongoose.model('Category', CategorySchema),
+  Pay: mongoose.model('Pay', PaySchema)
 }
 
 // 初始化数据

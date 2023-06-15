@@ -47,6 +47,12 @@ body,
   letter-spacing: 1px;
   flex-wrap: nowrap;
 }
+.right {
+  color: #fff;
+  width: 100px;
+  text-align: center;
+  margin-right: 20px;
+}
 .button {
   border: solid 2px #fff;
   transition: box-shadow 0.5s ease 0s;
@@ -56,6 +62,7 @@ body,
   padding: 4px 14px;
   border-radius: 8px;
   cursor: pointer;
+  margin-right: 20px;
 }
 .article_item {
   border-top: solid 1px #d3d7dc;

@@ -91,11 +91,11 @@ export default function Article() {
   )
   // 新增文章
   const addArticle = () => {
-    navigate('/articleManagement/updateArticle')
+    navigate('/admin/articleManagement/updateArticle')
   }
   // 编辑文章
   const editArticle = (id: string) => {
-    navigate(`/articleManagement/updateArticle?id=${id}`)
+    navigate(`/admin/articleManagement/updateArticle?id=${id}`)
   }
   // 删除文章
   const delArticle = (id: string) => {

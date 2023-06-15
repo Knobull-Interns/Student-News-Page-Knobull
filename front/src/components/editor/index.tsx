@@ -2,8 +2,10 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
-import { IEditorConfig } from '@wangeditor/editor'
+import { IEditorConfig, i18nChangeLanguage } from '@wangeditor/editor'
 import { getToken } from "@/utils";
+
+i18nChangeLanguage('en')
 
 type InsertFnType = (url: string, alt: string, href: string) => void
 
@@ -20,7 +22,6 @@ const MyEditor = forwardRef((props, ref) => {
   const [html, setHtml] = useState('<p></p>')
 
   useImperativeHandle(props.onRef, () => {
-    console.log(1)
     return {
       setHtml: setHtml
     }
@@ -39,7 +40,7 @@ const MyEditor = forwardRef((props, ref) => {
 
   // 编辑器配置
   const editorConfig: Partial<IEditorConfig> = {
-    placeholder: '请输入内容...',
+    placeholder: 'please enter content...',
     autoFocus: false,
     MENU_CONF: {}
   }

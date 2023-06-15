@@ -1,7 +1,9 @@
 import { getMenus, } from "@/common";
 import { MenuItem, MenuList, UserInfo, LayoutMode, MenuResponse, State, MenuMap } from "@/types"
 export const USER_INFO = "USER_INFO";
+export const WEB_USER_INFO = "WEB_USER_INFO";
 export const TOKEN = "REACT_ADMIN_TOKEN";
+export const WEBTOKEN = "REACT_WEB_TOKEN";
 export const MENU = "MENU";
 export const VISIBLE = "COMPONENTS_VISIBLE";
 export const LAYOUT_MODE = "LAYOUT_MODE";
@@ -41,9 +43,19 @@ function getSessionUser() {
   return getKey(false, USER_INFO);
 }
 
+function getWebUser() {
+  return getKey(false, WEB_USER_INFO);
+}
+
 function saveUser(info: UserInfo) {
   setKey(true, USER_INFO, info);
   setKey(false, USER_INFO, info);
+}
+
+function saveWebUser(info: UserInfo) {
+  console.log(info)
+  setKey(true, WEB_USER_INFO, info);
+  setKey(false, WEB_USER_INFO, info);
 }
 
 function sleep(seconed: number) {
@@ -56,6 +68,9 @@ function getLocalUser() {
   return getKey(true, USER_INFO);
 }
 
+function getLocalWebUser() {
+  return getKey(true, WEB_USER_INFO);
+}
 
 function getMenuParentKey(list: MenuList, key: string): string[] {
   const keys = [];
@@ -139,6 +154,10 @@ function saveToken(token: Token) {
   setKey(true, TOKEN, token)
 }
 
+function saveWebToken(token: Token) {
+  setKey(true, WEBTOKEN, token)
+}
+
 function getToken(): Token {
   return getKey(true, TOKEN)
 }
@@ -177,14 +196,18 @@ function clearLocalDatas(keys: string[]) {
 export {
   getDefaultMenu,
   getSessionUser,
+  getWebUser,
   saveUser,
+  saveWebUser,
   sleep,
   getLocalUser,
+  getLocalWebUser,
   getMenuParentKey,
   reduceMenuList,
   getLocalMenu,
   saveLocalMenu,
   saveToken,
+  saveWebToken,
   getToken,
   getKey,
   setKey,

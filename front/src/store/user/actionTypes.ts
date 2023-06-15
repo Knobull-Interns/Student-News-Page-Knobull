@@ -1,2 +1,3 @@
 export const SET_USERINFO = "SET_USERINFO";
+export const SET_WEB_USERINFO = "SET_WEB_USERINFO";
 export const CLEAR_USERINFO = "CLEAR_USERINFO";

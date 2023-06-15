@@ -45,11 +45,11 @@ router.post('/api/login', (req, res) => {
       console.log(err)
     } else if (doc) {
       if (req.body.type === 'user') {
-        // 用户登录
+        /* // 用户登录
         if (obj[req.body.name] !== req.body.code) {
           res.status(200).send({ status: 1, message: 'The verification code of the mobile phone is incorrect' })
           return
-        }
+        } */
         const salt = doc.salt
         if (doc.password === sha1(req.body.password + salt)) {
           const token = createToken(doc._id, doc.name)
@@ -111,10 +111,10 @@ router.post('/api/login', (req, res) => {
     } else if (!doc) {
       if (req.body.type === 'user') {
         // 用户登录
-        if (obj[req.body.name] !== req.body.code) {
+        /* if (obj[req.body.name] !== req.body.code) {
           res.status(200).send({ status: 1, message: 'The verification code of the mobile phone is incorrect' })
           return
-        }
+        } */
         const salt = rand(160, 36)
         const user = {
           name: req.body.name,
@@ -123,7 +123,7 @@ router.post('/api/login', (req, res) => {
           userType: 0,
           collectArticle: [],
           collectComment: [],
-          avatar: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2719292398,3645159946&fm=26&gp=0.jpg'
+          avatar: 'https://demo.buildadmin.com/static/images/avatar.png'
         }
         new db.User(user).save().then(user => {
           const doc1 = user._doc
@@ -132,10 +132,10 @@ router.post('/api/login', (req, res) => {
             id: doc1._id,
             name: doc1.name,
             token: token,
-            avatar: doc.avatar,
-            userType: doc.userType,
-            collectArticle: doc.collectArticle,
-            collectComment: doc.collectComment
+            avatar: doc1.avatar,
+            userType: doc1.userType,
+            collectArticle: doc1.collectArticle,
+            collectComment: doc1.collectComment
           })
         })
       } else {

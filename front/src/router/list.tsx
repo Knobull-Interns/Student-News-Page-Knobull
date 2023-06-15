@@ -17,7 +17,12 @@ const defaultArr: RouterInfo[] = [
   {
     [MENU_PATH]: "/",
     [MENU_KEY]: "index",
-    components: <Navigate to="/userManagement" replace />,
+    components: <Navigate to="/front/home" replace />,
+  },
+  {
+    [MENU_PATH]: "/admin",
+    [MENU_KEY]: "admin",
+    components: <Navigate to="/admin/userManagement" replace />,
   },
   {
     [MENU_PATH]: "/result/404",

@@ -35,7 +35,7 @@ const getPopupContainer = (HTMLElement: HTMLElement) => HTMLElement;
 
 const LayoutHeader = ({ children }: LayoutHeaderProps) => {
   const { styles } = useStyle()
-  const userInfo = useStateUserInfo()
+  const userInfo = useStateUserInfo().userInfo
   const { stateClearUser } = useDispatchUser()
   const logout = useCallback(() => {
     clearLocalDatas([USER_INFO, TOKEN, MENU]);

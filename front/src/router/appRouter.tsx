@@ -12,7 +12,7 @@ const RouterBasename = import.meta.env.REACT_APP_ROUTERBASE || "/"
 function AppRouter() {
   const [loading, setLoad] = useState(true);
   const { stateSetUser } = useDispatchUser()
-  const userInfo = useStateUserInfo()
+  const userInfo = useStateUserInfo().userInfo
   useEffect(() => {
     if (!userInfo) {
       let localInfo = getLocalUser();
@@ -28,7 +28,7 @@ function AppRouter() {
     return (
       <Spin size="large" wrapperClassName="loading-page" tip="Loading..." />
     );
-  if (!userInfo && window.location.pathname.indexOf('font') === -1) return <Login />;
+  if (!userInfo && window.location.pathname.indexOf('admin') !== -1) return <Login />;
   if (isHash) {
     return <HashRouter>
       <Layout />

@@ -249,7 +249,7 @@ function RegistrationForm() {
             Submit
           </Button>
           <Button danger onClick={back} type='link'>
-            返回上一页
+            Go Back
           </Button>
         </Form.Item>
       </Form>

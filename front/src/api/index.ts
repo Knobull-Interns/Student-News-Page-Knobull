@@ -34,6 +34,8 @@ const editArticle = (data: any) => request.post("/editArticle", data) as Promise
 const getArticleList = (data: any) => request.get("/articles", data) as Promise<UserListApi>;
 const deleteArticle = (data: any) => request.get("/deleteArticle", data) as Promise<ResponseData>;
 const getArticleDetail = (data: any) => request.get("/getArticleDetail", data) as Promise<ResponseData>;
+const isPayArticle = (data: any) => request.post("/isPayArticle", data) as Promise<ResponseData>;
+const payArticle = (data: any) => request.post("/payArticle", data) as Promise<ResponseData>;
 
 export const getFeedBack = (data: any) => request.post("/getfeedback", data) as Promise<ResponseData>;
 export const reply = (data: any) => request.post("/reply", data) as Promise<ResponseData>;
@@ -67,5 +69,7 @@ export {
   getArticleList,
   deleteArticle,
   getArticleDetail,
+  isPayArticle,
+  payArticle
 
 };

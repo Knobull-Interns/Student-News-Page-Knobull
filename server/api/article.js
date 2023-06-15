@@ -166,4 +166,21 @@ router.get('/api/collectArticle', (req, res) => {
   })
 })
 
+// 是否支付文章
+router.post('/api/isPayArticle', (req, res) => {
+  const articleId = req.body.articleId
+  const userId = req.body.userId
+  db.Pay.findOne({ articleId, userId }, (err, doc) => {
+    res.status(200).send({ result: !!doc })
+  })
+})
+
+// 支付文章
+router.post('/api/payArticle', (req, res) => {
+  const articleId = req.body.articleId
+  const userId = req.body.userId
+  db.Pay({ articleId, userId }).save().then(() => {
+    res.status(200).send({ status: 0, message: 'pay success!' })
+  })
+})
 module.exports = router

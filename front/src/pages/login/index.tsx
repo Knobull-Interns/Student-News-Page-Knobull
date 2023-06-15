@@ -39,7 +39,7 @@ function Login() {
         if (status === 1 && !data) return;
         const info = Object.assign({ isLogin: true }, data)
         saveToken(token);
-        message.success(msg);
+        message.success('Login success!');
         if (values.remember) {
           saveUser(info);
         }

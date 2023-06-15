@@ -57,4 +57,21 @@ router.get('/api/userInfo', async (req, res) => {
   res.status(200).send(userInfo)
 })
 
+// 获取用户列表
+router.get('/api/getuserlist', (req, res) => {
+    const page = req.query.page
+    const limit = req.query.pageSize || 10
+    const skip = limit * (page - 1)
+    const params = {
+        userType: 0
+    }
+    db.User.find(params)
+        .limit(limit * 1)
+        .skip(skip)
+        .then(async articles => {
+          const count = await db.User.find(params).count()
+          res.send({ status: 0, total: count, data: articles })
+        })
+  })
+
 module.exports = router

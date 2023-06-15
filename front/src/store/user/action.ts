@@ -6,6 +6,11 @@ export const setUserInfoAction = (info: UserInfo): UserAction => ({
   info,
 });
 
+export const setWebUserInfoAction = (info: UserInfo): UserAction => ({
+  type: ActionTypes.SET_WEB_USERINFO,
+  info,
+});
+
 export const clearUser = (): UserAction => ({
   type: ActionTypes.CLEAR_USERINFO,
 });
