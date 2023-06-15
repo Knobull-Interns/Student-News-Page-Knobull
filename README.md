@@ -1,14 +1,9 @@
 # Student-News-Page
-Design and build a news page for student
+Design and build a news page for student:
+Progress: the basic student news website is built, needs some cleanup, updates. 
+Next: Research and implement requested features.
 
 Technology Stack: 
-1. MERN(MongoDb,Express.js, React.js, Node.js)
-2. Web Socket?
+1. MERN(MongoDb,Express.js, React.js, Node.js), typescript, redux
 
-Features:
-1. Article Management:
-  Allows for publishing of articles.
-  A feature research is required to determine how to enable one-click publishing from a phone directly to the website. A potential solution could involve the use of web sockets for real-time updates.
-  Paid Subscription:
 
-2. Users should have the option to subscribe to a paid version for additional benefits.
