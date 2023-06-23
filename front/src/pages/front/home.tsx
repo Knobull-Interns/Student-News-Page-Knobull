@@ -220,7 +220,7 @@ export default function Home() {
               </div>
             ))
           ) : (
-            <div style={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }}>no data</div>
+            <div style={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }}>No Data</div>
           )}
         </InfiniteScroll>
       </div>
