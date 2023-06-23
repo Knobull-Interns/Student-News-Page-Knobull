@@ -18,14 +18,14 @@ import { useDispatch } from 'react-redux'
 const IPT_RULE_USERNAME = [
   {
     required: true,
-    message: 'please input account'
+    message: 'Account'
   }
 ]
 
 const IPT_RULE_PASSWORD = [
   {
     required: true,
-    message: 'please input password'
+    message: 'Password'
   }
 ]
 
@@ -107,7 +107,7 @@ export default function Home() {
         confirm({
           title: 'Tip',
           icon: <ExclamationCircleFilled />,
-          content: `you need to pay $${item.charge} for read this article,confirm payment?`,
+          content: `you need to pay $${item.charge} for read this article, confirm payment?`,
           onOk() {
             payArticle({ userId: webUserInfo.id, articleId: item._id}).then(() => {
               message.success('Pay Success')
@@ -203,7 +203,7 @@ export default function Home() {
           hasMore={hasMore}
           endMessage={
             <p style={{ textAlign: 'center' }}>
-              <b>Yay! You have seen it all</b>
+              <b>Home Page</b>
             </p>
           }
           loader={<h4>Loading...</h4>}>
@@ -232,14 +232,14 @@ export default function Home() {
         onCancel={() => setIsModalOpen(false)}>
         <Form className="login-form" ref={formRef} onFinish={onFinish}>
           <Form.Item name="name" rules={IPT_RULE_USERNAME}>
-            <Input prefix={<MyIcon type="icon_nickname" />} placeholder="please input account" />
+            <Input prefix={<MyIcon type="icon_nickname" />} placeholder="Account" />
           </Form.Item>
           <Form.Item name="password" rules={IPT_RULE_PASSWORD}>
             <Input
               prefix={<MyIcon type="icon_locking" />}
               type="password"
               autoComplete="off"
-              placeholder="please input password"
+              placeholder="Password"
             />
           </Form.Item>
         </Form>
