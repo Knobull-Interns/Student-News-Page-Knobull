@@ -3,24 +3,22 @@ import { ColorResult, SketchPicker } from "react-color";
 import { Row, Col, Button } from "antd";
 import "./index.less";
 
-
 interface Position {
-  left: number
-  top: number
+  left: number;
+  top: number;
 }
 
 interface ColorProps {
-  color: string
-  pageX: number
-  pageY: number
-  onSureChange: (color: ColorResult, key: string) => void
-  colorKey: string
-  isShow: boolean
-  onClose: () => void
+  color: string;
+  pageX: number;
+  pageY: number;
+  onSureChange: (color: ColorResult, key: string) => void;
+  colorKey: string;
+  isShow: boolean;
+  onClose: () => void;
 }
 
 const getPositon = (x: number, y: number): Position => ({ left: x, top: y });
-
 
 function Color({
   color,
@@ -31,7 +29,9 @@ function Color({
   isShow,
   onClose,
 }: ColorProps) {
-  const [changeColor, setColor] = useState<ColorResult>({ hex: color } as ColorResult);
+  const [changeColor, setColor] = useState<ColorResult>({
+    hex: color,
+  } as ColorResult);
 
   // 变化重置
   useEffect(() => {
@@ -59,13 +59,13 @@ function Color({
       </Col>
       <Col>
         <Button type="primary" size="small" onClick={onChangeComplete}>
-          确认
+          Confirm
         </Button>
         <Button size="small" danger onClick={onClose}>
-          取消
+          Cancel
         </Button>
       </Col>
     </Row>
   );
 }
-export default Color
+export default Color;
