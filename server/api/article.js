@@ -47,10 +47,10 @@ router.post("/api/editArticle", (req, res) => {
 // delete article
 router.get("/api/deleteArticle", async (req, res) => {
   const id = req.query.id;
-  db.Article.remove({ _id: id }).then((res1) => {
+  db.Article.deleteOne({ _id: id }).then((res1) => {
     res
       .status(200)
-      .send({ status: 0, message: "Deleting a article succeeded" });
+      .send({ status: 0, message: "Deleting an article succeeded" });
   });
 });
 

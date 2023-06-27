@@ -9,7 +9,7 @@ const initFormItems = [
       name: "f_back",
     },
     childProps: {
-      placeholder: "回复内容",
+      placeholder: "reply content",
       rows: 4,
     },
   },
@@ -22,13 +22,18 @@ const initFormItems = [
   },
 ];
 interface Props {
-  id?: number | null
-  isShow: boolean
-  onSubmit: (...agrs: any[]) => void
-  onCancel: (...agrs: any[]) => void
+  id?: number | null;
+  isShow: boolean;
+  onSubmit: (...agrs: any[]) => void;
+  onCancel: (...agrs: any[]) => void;
 }
 
-export default function FeedbackModal({ id, isShow, onSubmit, onCancel }: Props) {
+export default function FeedbackModal({
+  id,
+  isShow,
+  onSubmit,
+  onCancel,
+}: Props) {
   const [form, setForm] = useState<FormInstance | null>(null);
   useEffect(() => {
     if (id && form) {
@@ -48,10 +53,10 @@ export default function FeedbackModal({ id, isShow, onSubmit, onCancel }: Props)
   return (
     <Modal
       maskClosable={false}
-      title="回复"
+      title="reply"
       open={isShow}
-      okText="确认"
-      cancelText="取消"
+      okText="confirm"
+      cancelText="cancel"
       onCancel={close}
       onOk={submit}
     >
