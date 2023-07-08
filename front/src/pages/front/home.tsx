@@ -14,6 +14,7 @@ import type { FormInstance } from 'antd/es/form'
 import { UserInfo } from '@/types'
 import { setWebUserInfoAction } from '@/store/user/action'
 import { useDispatch } from 'react-redux'
+import logo from "../../assets/images/knobullpic.jpg";
 
 const IPT_RULE_USERNAME = [
   {
@@ -170,23 +171,28 @@ export default function Home() {
     <div>
       <div className="top_header"></div>
       <div className="header__Container">
-        <img className="logo" src="https://www.usnews.com/static/img/usn-logo-large.svg" />
+        <img className="logo" src={logo} />
         <div className="classify">
           {classifyData.map((item, index) => {
             return (
               <div
                 className="classify_item"
-                style={{ color: classifyActive === index ? 'red' : '#fff' }}
+                style={{ color: classifyActive === index ? "red" : "#fff" }}
                 key={item._id}
-                onClick={() => changeClassify(item._id, index)}>
+                onClick={() => changeClassify(item._id, index)}
+              >
                 {item.name}
               </div>
-            )
+            );
           })}
         </div>
         {webUserInfo ? (
           <div className="right">
-            <Dropdown placement="bottom" getPopupContainer={getPopupContainer} dropdownRender={dropdownRender}>
+            <Dropdown
+              placement="bottom"
+              getPopupContainer={getPopupContainer}
+              dropdownRender={dropdownRender}
+            >
               <div>{webUserInfo.name}</div>
             </Dropdown>
           </div>
@@ -202,13 +208,14 @@ export default function Home() {
           next={getArticleData}
           hasMore={hasMore}
           endMessage={
-            <p style={{ textAlign: 'center' }}>
+            <p style={{ textAlign: "center" }}>
               <b>Home Page</b>
             </p>
           }
-          loader={<h4>Loading...</h4>}>
+          loader={<h4>Loading...</h4>}
+        >
           {list.length > 0 ? (
-            list.map(item => (
+            list.map((item) => (
               <div className="article_item" key={item._id}>
                 <div className="left">
                   <div className="title" onClick={() => articleDetail(item)}>
@@ -216,11 +223,24 @@ export default function Home() {
                   </div>
                   <div className="desc">{item.desc}</div>
                 </div>
-                <img className="banner" src={item.banner} alt="" onClick={() => articleDetail(item)} />
+                <img
+                  className="banner"
+                  src={item.banner}
+                  alt=""
+                  onClick={() => articleDetail(item)}
+                />
               </div>
             ))
           ) : (
-            <div style={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }}>No Data</div>
+            <div
+              style={{
+                fontWeight: "bold",
+                textAlign: "center",
+                fontSize: "20px",
+              }}
+            >
+              No Data
+            </div>
           )}
         </InfiniteScroll>
       </div>
@@ -229,10 +249,14 @@ export default function Home() {
         confirmLoading={btnLoad}
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={() => setIsModalOpen(false)}>
+        onCancel={() => setIsModalOpen(false)}
+      >
         <Form className="login-form" ref={formRef} onFinish={onFinish}>
           <Form.Item name="name" rules={IPT_RULE_USERNAME}>
-            <Input prefix={<MyIcon type="icon_nickname" />} placeholder="Account" />
+            <Input
+              prefix={<MyIcon type="icon_nickname" />}
+              placeholder="Account"
+            />
           </Form.Item>
           <Form.Item name="password" rules={IPT_RULE_PASSWORD}>
             <Input
@@ -245,7 +269,7 @@ export default function Home() {
         </Form>
       </Modal>
     </div>
-  )
+  );
 }
 
 Home.route = {
