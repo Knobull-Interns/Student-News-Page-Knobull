@@ -209,7 +209,7 @@ export default function Home() {
           hasMore={hasMore}
           endMessage={
             <p style={{ textAlign: "center" }}>
-              <b>Home Page</b>
+              <b>Load more</b>
             </p>
           }
           loader={<h4>Loading...</h4>}
