@@ -183,26 +183,36 @@ router.post("/api/changeAvatar", (req, res) => {
 
 router.post("/api/upload", (req, res) => {
   const form = new formidable.IncomingForm();
-  form.uploadDir = path.join(__dirname, "../public"); // 上传图片放置的文件夹
+  form.uploadDir = path.join(__dirname, "../public");
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
-    const index = files.files.filepath.lastIndexOf("\\");
+    console.log("Files: ", files);
+
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: err });
+    }
+
+    if (!files || !files.files || !files.files.filepath) {
+      console.error("No files in the request");
+      return res.status(400).json({ error: "No files in the request" });
+    }
+
+    const index = files.files.filepath.lastIndexOf("/");
     const fileName = files.files.filepath.substring(index + 1);
-    const fileType = files.files.originalFilename.substring(
-      files.files.originalFilename.lastIndexOf(".") + 1
-    );
-    const imgUrl = `http://127.0.0.1:3003/${fileName}.${fileType}`;
-    fs.rename(
-      form.uploadDir + "\\" + fileName,
-      form.uploadDir + `\\${fileName}.${fileType}`,
-      (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.status(200).send({ message: imgUrl });
-        }
+    const fileType = files.files.originalFilename.split(".").pop();
+    const newFileName = `${fileName}.${fileType}`;
+    const newFilePath = path.join(form.uploadDir, newFileName);
+    const imgUrl = `http://localhost:3003/${newFileName}`;
+
+    fs.rename(files.files.filepath, newFilePath, (err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: err });
+      } else {
+        res.status(200).send({ message: imgUrl });
       }
-    );
+    });
   });
 });
 
