@@ -1,9 +1,9 @@
-# Knonbull Student News Website Documentation
+# Knobull Student News Website Documentation
 
 <h1>Overview</h1>
 
-<p>This is a <strong>Student News Website</strong> for <strong>Knonbull</strong>, designed to allow students to browse news articles. </p>
-<p><strong>Supervisor: </strong>Lynn (The Founder of Knonbull)  </p>
+<p>This is a <strong>Student News Website</strong> for <strong>Knobull</strong>, designed to allow students to browse news articles. </p>
+<p><strong>Supervisor: </strong>Lynn (The Founder of Knobull)  </p>
 <p><strong>Team Leader: </strong>Jiahong Liu</p>
 
 <h2>Preview</h2>
