@@ -14,9 +14,16 @@
 <h3>Current Add Article Page</h3>
 <img width="1410" alt="addArticle" src="https://github.com/JahongLiu/Student-News-Page/assets/121676539/d6efd321-6e70-4af5-a368-50a82b0f9194">
 
-<h1>Tech Stack</h1>
-<p>It's built using the <strong>MERN stack</strong> (MongoDb,Express.js, React.js, Node.js) with <strong>TypeScript.</strong></p>
-<p>P.S. <strong>'react-ant-admin'</strong>, a React.js based dashboard was used for the management</p>
+<h1>Architecture</h1>
+<p>This application follows the standard <strong>MERN Stack</strong> architecture<p>
+  <ul>
+    <strong><li>MongDB</li></strong> (Database)
+    <strong><li>Express.js</li></strong> (Backend)
+    <strong><li>React.js</li></strong> (Frontend)
+    <strong><li>Node.js</li></strong> (Backend)
+  </ul>
+<p>P.S. <strong>'react-ant-admin'</strong>, an MIT licensed React.js based dashboard was used for the management system</p>
+
 <h1>Requirements</h1>
 <ul>
   <li>
@@ -24,9 +31,6 @@
   </li>
   <li>
     MongoDB v4.4+
-  </li>
-    <li>
-    React.js v17.0.0+ (The project's dependencies will handle the installation of React.js when you run "npm install")
   </li>
 </ul>
 
@@ -40,9 +44,6 @@
 <p><strong>npm run dev</strong></p>
 <p>5. To start the server, run:</p>
 <p><strong>npm run server</strong></p>
-
-<h1>Architecture</h1>
-<p>This application follows the standard MERN stack architecture, with a React frontend and an Express/Node.js backend. The frontend is located in the front directory, and the server side is in the server directory.</p>
 
 <h1>API Documentation</h1>
 <h2>API Directory Structure</h2>
