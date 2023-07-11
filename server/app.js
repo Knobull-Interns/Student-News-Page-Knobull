@@ -1,14 +1,21 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const route = require("./api/index.js");
-const { expressjwt: jwt } = require("express-jwt");
-const secret = require("./config").jwt;
-const cors = require("cors");
+// This is our Node.js server script using Express.js
+// This is a basic setup for the backend server using Express.js with JWT-based authentication, 
+// body parsing, CORS and error handling.
 
+// Importing modules
+const express = require("express"); 
+const bodyParser = require("body-parser"); 
+const route = require("./api/index.js");
+const { expressjwt: jwt } = require("express-jwt"); 
+const secret = require("./config").jwt; //imoprts the secret key used to sign and verify JWTs
+const cors = require("cors"); //cross-origin resource sharing
 const app = express();
-app.use(cors());
+
+app.use(cors()); //Default configuration, allows all origins.(Used by Jahong to fix CORS error, don't worry)
 
 app.set("port", process.env.port || 3003);
+
+// Parse incoming request bodies in a URL-encoded format and JSON format
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
