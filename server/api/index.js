@@ -1,3 +1,4 @@
+// This file is used to import all the different api routes and export it as a function called app, we use it in the app.js
 const article = require('./article.js')
 const draft = require('./draft.js')
 const tag = require('./tag.js')
