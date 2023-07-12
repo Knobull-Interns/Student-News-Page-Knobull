@@ -23,6 +23,7 @@
     <strong><li>Node.js</li></strong> (Backend)
   </ul>
 <p>P.S. <strong>'react-ant-admin'</strong>, an MIT licensed React.js based dashboard was used for the management system</p>
+<p>It's <strong>not required</strong> to study the original dashboard to understand the current project, since the open source dashboard was documented in chinese. Instead, I will document this project throughly with detailed comments</p>
 
 <h1>Requirements</h1>
 <ul>
