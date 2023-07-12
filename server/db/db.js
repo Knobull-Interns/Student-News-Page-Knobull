@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const sha1 = require("sha1");
 const rand = require("csprng");
-// const Sequence = require('./sequence')
 
 // Data Schemas for User
 const UserSchema = new Schema(
