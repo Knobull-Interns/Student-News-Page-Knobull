@@ -1,3 +1,6 @@
+// This is our API for user authentication, 
+// Need to finish up phone verfication and profile management operations.
+
 const express = require("express");
 const router = express.Router();
 const secret = require("../config").jwt;

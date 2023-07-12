@@ -1,3 +1,6 @@
+// This our articles API routes.
+// It has different handlers for different behaviors 
+
 const express = require("express");
 const router = express.Router();
 const db = require("../db/db.js");

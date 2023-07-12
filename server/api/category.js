@@ -1,3 +1,5 @@
+// This is our module exports a set of router handlers for category operations
+
 const express = require("express");
 const router = express.Router();
 const db = require("../db/db.js");

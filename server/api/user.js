@@ -1,3 +1,5 @@
+// This is for our user management, CRUD operations on user data.
+
 const express = require("express");
 const router = express.Router();
 const db = require("../db/db.js");

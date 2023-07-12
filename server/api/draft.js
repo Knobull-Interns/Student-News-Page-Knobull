@@ -1,3 +1,5 @@
+// This is our module that sets up and export router handlers for managing draft articles.
+
 const express = require("express");
 const router = express.Router();
 const db = require("../db/db.js");
