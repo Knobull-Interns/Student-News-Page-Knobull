@@ -19,75 +19,75 @@ import MyIcon from "../icon";
 import arrayMove from "array-move";
 import { getKey, setKey, rmKey } from "@/utils";
 import "./index.less";
-import useStyle from "./style"
-import { MyTableProps, Columns, renderArugs, Column } from "./types"
+import useStyle from "./style";
+import { MyTableProps, Columns, renderArugs, Column } from "./types";
 import { useThemeToken } from "@/hooks";
 
 const DragHandle = SortableHandle(() => (
   <MyIcon type="icon_mirrorlightctrl" className="drag-sort" />
 ));
 const SortableItem = SortableElement((props: any) => <tr {...props} />);
-const SortableBody = SortableContainer((props: any) => <tbody  {...props} />);
+const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
 
 const setColTitle: Columns = [
   {
-    title: "列排序",
+    title: "Column Sorting",
     dataIndex: "sort",
     className: "drag-visible",
     render: () => <DragHandle />,
   },
   {
-    title: "列名",
+    title: "Column Name",
     dataIndex: "title",
     className: "drag-visible",
     align: "center",
   },
   {
-    title: "宽度",
+    title: "Width",
     dataIndex: "width",
     type: "inputNumber",
   },
   {
-    title: "固定",
+    title: "Fixed",
     dataIndex: "fixed",
     width: 120,
     type: "switch",
     align: "center",
     range: [
-      { v: false, t: "关" },
-      { v: "left", t: "左固定" },
-      { v: "right", t: "右固定" },
+      { v: false, t: "off" },
+      { v: "left", t: "Fixed Left" },
+      { v: "right", t: "Fixed Right" },
     ],
   },
   {
-    title: "超出宽度隐藏",
+    title: "Hide if Exceeding Width",
     dataIndex: "ellipsis",
     type: "switch",
     align: "center",
     range: [
-      { v: false, t: "否" },
-      { v: true, t: "是" },
+      { v: false, t: "No" },
+      { v: true, t: "Yes" },
     ],
   },
   {
-    title: "对齐",
+    title: "Align",
     dataIndex: "align",
     type: "switch",
     align: "center",
     range: [
-      { v: "left", t: "左" },
-      { v: "center", t: "居中" },
-      { v: "right", t: "右" },
+      { v: "left", t: "Left" },
+      { v: "center", t: "Center" },
+      { v: "right", t: "Right" },
     ],
   },
   {
-    title: "隐藏",
+    title: "Hidden",
     dataIndex: "hidden",
     type: "switch",
     align: "center",
     range: [
-      { v: "hidden", t: "隐藏" },
-      { v: "auto", t: "显示" },
+      { v: "hidden", t: "Hidden" },
+      { v: "auto", t: "Show" },
     ],
   },
 ];
@@ -100,32 +100,33 @@ const defaultCol: Omit<Column, "dataIndex"> = {
   hidden: "auto",
 };
 
-
 function UseTable(columns: Columns, saveKey: MyTableProps["saveKey"]) {
   const [showDrawer, setShowDrawer] = useState(false);
   const [col, setCol] = useState<Columns>([]);
   const [tbTitle, setTitle] = useState<Columns>([]);
-  const token = useThemeToken()
-  const { styles } = useStyle(token)
+  const token = useThemeToken();
+  const { styles } = useStyle(token);
   const DraggableContainer = useMemo(() => {
     return function H(props: any) {
-      return <SortableBody
-        useDragHandle
-        disableAutoscroll
-        helperClass={styles.rowDragging}
-        onSortEnd={onSortEnd}
-        {...props}
-      />
-    }
+      return (
+        <SortableBody
+          useDragHandle
+          disableAutoscroll
+          helperClass={styles.rowDragging}
+          onSortEnd={onSortEnd}
+          {...props}
+        />
+      );
+    };
   }, [styles, onSortEnd]);
   const DraggableBodyRow = useMemo(() => {
     return function H({ className, style, ...restProps }: any) {
       const index = col.findIndex((x) => x.index === restProps["data-row-key"]);
       return <SortableItem index={index} {...restProps} />;
-    }
+    };
   }, [col]);
   useEffect(() => {
-    const data: Columns = getKey(true, saveKey || '');
+    const data: Columns = getKey(true, saveKey || "");
     if (saveKey && data && columns && columns.length === data.length) {
       const columnInfo: any = {},
         dataInfo: any = {};
@@ -135,7 +136,7 @@ function UseTable(columns: Columns, saveKey: MyTableProps["saveKey"]) {
         ? data.every((i) => i.dataIndex === columnInfo[i.dataIndex]?.dataIndex)
         : false;
       if (isSameKey) {
-        // 如果当前表格头数据 与 缓存设置的数组长度一样，就优先使用缓存的
+        // If the current table header data is the same length as the cached setting array, prefer to use the cached one
         const merge = data.map((item) => ({
           ...defaultCol,
           ...columnInfo[item.dataIndex],
@@ -146,7 +147,7 @@ function UseTable(columns: Columns, saveKey: MyTableProps["saveKey"]) {
         initDefaultCol();
       }
     } else if (!data && columns && columns.length !== col.length) {
-      initDefaultCol()
+      initDefaultCol();
     }
     // eslint-disable-next-line
   }, [saveKey, columns]);
@@ -200,7 +201,7 @@ function UseTable(columns: Columns, saveKey: MyTableProps["saveKey"]) {
 
   function inuputRender(dataIndex: string, text: number, col: Column) {
     return (
-      <Tooltip title="失去焦点触发" arrow>
+      <Tooltip title="Triggered when focus is lost" arrow>
         <InputNumber
           min={0}
           max={800}
@@ -217,12 +218,15 @@ function UseTable(columns: Columns, saveKey: MyTableProps["saveKey"]) {
   function show() {
     setShowDrawer(true);
   }
-  function onSortEnd({ oldIndex, newIndex }: {
-    oldIndex: number
-    newIndex: number
+  function onSortEnd({
+    oldIndex,
+    newIndex,
+  }: {
+    oldIndex: number;
+    newIndex: number;
   }) {
     if (oldIndex !== newIndex) {
-      const arr: Array<Columns> = []
+      const arr: Array<Columns> = [];
       const newData = arrayMove(arr.concat(col), oldIndex, newIndex).filter(
         (el) => !!el
       );
@@ -233,27 +237,29 @@ function UseTable(columns: Columns, saveKey: MyTableProps["saveKey"]) {
     if (!saveKey) {
       return notification.error({
         type: "error",
-        description: "你未定义表格的savaKey属性，请定义后保存",
-        message: "保存失败",
+        description:
+          "You have not defined the savaKey property of the table, please define it before saving",
+        message: "Save failed",
       });
     }
     setKey(true, saveKey, col);
-    message.success("保存设置成功!");
+    message.success("Settings saved successfully");
   }
-  // 删除 保存的表格显示
+  // Delete the saved table display
   const delTbSet = () => {
     if (!saveKey) {
       return notification.error({
         type: "error",
-        description: "你未定义表格的savaKey属性，请定义后在点击删除",
-        message: "删除失败",
+        description:
+          "You have not defined the savaKey property of the table, please define it before clicking delete",
+        message: "Delete failed",
       });
     }
     rmKey(true, saveKey);
     initDefaultCol();
-    message.success("删除成功!");
+    message.success("Deleted Successfully!");
   };
-  // 初始化设置表格默认格式
+  // Initialize the default table format settings
   function initDefaultCol() {
     const newCol = columns.map((c, index) => ({
       ...defaultCol,
@@ -271,7 +277,7 @@ function UseTable(columns: Columns, saveKey: MyTableProps["saveKey"]) {
     DraggableContainer,
     DraggableBodyRow,
     saveTbSet,
-    delTbSet
+    delTbSet,
   };
 }
 
@@ -292,10 +298,10 @@ function MyTable({
     DraggableContainer,
     DraggableBodyRow,
     saveTbSet,
-    delTbSet
+    delTbSet,
   } = UseTable(columns, saveKey);
-  const token = useThemeToken()
-  const { styles } = useStyle(token)
+  const token = useThemeToken();
+  const { styles } = useStyle(token);
   return (
     <div className="react-ant-table">
       {/* <Row className={styles.set} justify="end">
@@ -319,7 +325,7 @@ function MyTable({
         onClose={hiddin}
         maskClosable={true}
         open={showDrawer}
-        title="表格显示设置"
+        title="Table Display Settings"
       >
         <Table
           columns={tbTitle}
@@ -335,10 +341,11 @@ function MyTable({
         />
         <Row justify="center" className="mt20">
           <Button type="primary" onClick={saveTbSet}>
-            保存此表格设置，下次打开默认启用
+            Save this table setting, it will be used by default next time you
+            open
           </Button>
           <Button danger type="ghost" className="del" onClick={delTbSet}>
-            删除已保存的设置
+            Delete saved settings
           </Button>
         </Row>
       </Drawer>

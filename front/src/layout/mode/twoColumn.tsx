@@ -3,11 +3,11 @@ import Header from "../header";
 import Menu from "../siderMenu";
 import TopMenu from "../topMenu";
 import Router from "@/router";
-import { useStyle } from "../style"
+import { useStyle } from "../style";
 const { Content } = Layout;
 
 const TowColumn = () => {
-  const { styles } = useStyle()
+  const { styles } = useStyle();
   return (
     <Layout className="my-layout-body">
       <Header children={null} />

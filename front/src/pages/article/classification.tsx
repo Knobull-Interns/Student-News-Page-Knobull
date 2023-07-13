@@ -1,31 +1,31 @@
-import { useEffect, useState } from 'react'
-import { Button, Popconfirm, Row, Col, message } from 'antd'
-import ClassificationModal from '@/components/modal/classification'
-import { getClassificationList, deleteClassification } from '@/api'
-import './index.less'
-import MyTable from '@/components/table'
-import { MapKey, ResponseUserInfo } from '@/types'
+import { useEffect, useState } from "react";
+import { Button, Popconfirm, Row, Col, message } from "antd";
+import ClassificationModal from "@/components/modal/classification";
+import { getClassificationList, deleteClassification } from "@/api";
+import "./index.less";
+import MyTable from "@/components/table";
+import { MapKey, ResponseUserInfo } from "@/types";
 
 export default function User() {
-  const [tableData, setData] = useState<ResponseUserInfo[]>([])
+  const [tableData, setData] = useState<ResponseUserInfo[]>([]);
   const [tableCol, setCol] = useState<MapKey>([
     {
-      dataIndex: '_id',
-      key: 'classificationId',
-      title: 'Classification Id',
-      align: 'center'
+      dataIndex: "_id",
+      key: "classificationId",
+      title: "Classification Id",
+      align: "center",
     },
     {
-      dataIndex: 'name',
-      key: 'classificationName',
-      title: 'Classification Name',
-      align: 'center'
+      dataIndex: "name",
+      key: "classificationName",
+      title: "Classification Name",
+      align: "center",
     },
     {
-      dataIndex: 'active',
-      key: 'active',
-      title: 'Action',
-      align: 'center',
+      dataIndex: "active",
+      key: "active",
+      title: "Action",
+      align: "center",
       render: (text: string, record: any) => (
         <>
           <Button type="link" onClick={() => showInfoModal(record._id, true)}>
@@ -42,28 +42,28 @@ export default function User() {
             </Button>
           </Popconfirm>
         </>
-      )
-    }
-  ])
-  const [total, setTotal] = useState(0)
-  const [showModal, setShow] = useState(false)
-  const [chooseId, setId] = useState<string>(null)
+      ),
+    },
+  ]);
+  const [total, setTotal] = useState(0);
+  const [showModal, setShow] = useState(false);
+  const [chooseId, setId] = useState<string>(null);
 
   useEffect(() => {
-    getClassificationData()
-  }, [])
+    getClassificationData();
+  }, []);
 
-  // 显示弹窗
+  // Show Info Modal
   const showInfoModal = (id: string, type: boolean) => {
     if (id) {
-      setId(id)
+      setId(id);
     } else {
-      setId(null)
+      setId(null);
     }
-    setShow(type)
-  }
+    setShow(type);
+  };
 
-  // 删除分类
+  // Delete Classification
   const delClassification = (id: string) => {
     deleteClassification({ id }).then((res) => {
       const { message: msg, status } = res;
@@ -72,30 +72,36 @@ export default function User() {
         getClassificationData();
       }
     });
-  }
+  };
 
   const renderTitle = () => (
     <Row justify="space-between" gutter={80}>
-      <Col style={{ lineHeight: '32px' }}>Classification List</Col>
+      <Col style={{ lineHeight: "32px" }}>Classification List</Col>
       <Col>
         <Button type="primary" onClick={() => showInfoModal(null, true)}>
           Add Classification
         </Button>
       </Col>
     </Row>
-  )
+  );
   const getClassificationData = () => {
-    getClassificationList().then(res => {
-      setData(res.data)
-    })
-  }
+    getClassificationList().then((res) => {
+      setData(res.data);
+    });
+  };
   const updateClassificationData = () => {
-    getClassificationData()
-  }
+    getClassificationData();
+  };
 
   return (
     <div className="user-container">
-      <MyTable title={renderTitle} dataSource={tableData} rowKey="_id" columns={tableCol} pagination={false} />
+      <MyTable
+        title={renderTitle}
+        dataSource={tableData}
+        rowKey="_id"
+        columns={tableCol}
+        pagination={false}
+      />
       <ClassificationModal
         isShow={showModal}
         classification_id={chooseId}
@@ -103,7 +109,7 @@ export default function User() {
         onOk={updateClassificationData}
       />
     </div>
-  )
+  );
 }
 
-User.route = { [MENU_PATH]: '/admin/articleManagement/articleClassification' }
+User.route = { [MENU_PATH]: "/admin/articleManagement/articleClassification" };

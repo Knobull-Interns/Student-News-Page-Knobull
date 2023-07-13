@@ -1,5 +1,16 @@
-import { getMenus, } from "@/common";
-import { MenuItem, MenuList, UserInfo, LayoutMode, MenuResponse, State, MenuMap } from "@/types"
+// This is a utility file with various helper functions related to managing session storage, local storage,
+// user inofrmation, authentication tokens, menu handling, and layout mode.
+
+import { getMenus } from "@/common";
+import {
+  MenuItem,
+  MenuList,
+  UserInfo,
+  LayoutMode,
+  MenuResponse,
+  State,
+  MenuMap,
+} from "@/types";
 export const USER_INFO = "USER_INFO";
 export const WEB_USER_INFO = "WEB_USER_INFO";
 export const TOKEN = "REACT_ADMIN_TOKEN";
@@ -9,23 +20,23 @@ export const VISIBLE = "COMPONENTS_VISIBLE";
 export const LAYOUT_MODE = "LAYOUT_MODE";
 
 interface MenuOpenData {
-  openKeys: string[]
-  selectKey: string[]
-  openedMenu: MenuItem[]
+  openKeys: string[];
+  selectKey: string[];
+  openedMenu: MenuItem[];
 }
-type Token = string | null | undefined
+type Token = string | null | undefined;
 
-// 获取默认页面
+// Get the default page
 async function getDefaultMenu(): Promise<MenuOpenData> {
   let openKeys: string[] = [],
     selectKey: string[] = [],
     openedMenu: MenuItem[] = [];
   const menuList = await getMenus();
   menuList.some((list) => {
-    const child = list[MENU_CHILDREN]
+    const child = list[MENU_CHILDREN];
     if (child && child.length) {
-      openKeys = [(list[MENU_KEY] as string)];
-      selectKey = [(child[0][MENU_KEY] as string)];
+      openKeys = [list[MENU_KEY] as string];
+      selectKey = [child[0][MENU_KEY] as string];
       openedMenu = [child[0]];
       return true;
     }
@@ -53,7 +64,7 @@ function saveUser(info: UserInfo) {
 }
 
 function saveWebUser(info: UserInfo) {
-  console.log(info)
+  console.log(info);
   setKey(true, WEB_USER_INFO, info);
   setKey(false, WEB_USER_INFO, info);
 }
@@ -77,7 +88,7 @@ function getMenuParentKey(list: MenuList, key: string): string[] {
   const info = list.find((item) => item[MENU_KEY] === key);
   let parentKey = info?.[MENU_PARENTKEY];
   if (parentKey) {
-    const data = getMenuParentKey(list, parentKey)
+    const data = getMenuParentKey(list, parentKey);
     keys.push(...data);
     keys.push(parentKey);
   }
@@ -85,27 +96,27 @@ function getMenuParentKey(list: MenuList, key: string): string[] {
 }
 
 export function formatMenu(list: MenuList) {
-  const newList = list.map(item => ({ ...item }))
+  const newList = list.map((item) => ({ ...item }));
   const menuMap: MenuMap = {};
   const parentMenu: MenuList = [];
   newList.forEach((item) => {
-    // 当前 菜单的key
+    // The key of the current menu
     const currentKey = item[MENU_KEY];
-    // 当前 菜单的父菜单key
+    // The key of the parent menu of the current menu
     const currentParentKey = item[MENU_PARENTKEY];
-    // 如果 映射表还没有值 就把当前项 赋值进去
+    // If the mapping table does not have a value, then assign the current item to it
     if (!menuMap[currentKey]) {
       menuMap[currentKey] = item;
     } else {
-      // 有值 说明 有子项 保留子项 把当前值 赋值进去
+      // If there is a value, it means there is a child item, keep the child item and assign the current value to it
       item[MENU_CHILDREN] = menuMap[currentKey][MENU_CHILDREN];
       menuMap[currentKey] = item;
     }
-    // 如果当前项 有父级
+    // If the current item has a parent
     if (currentParentKey) {
-      // 父级还没有在映射表上
+      // If the paret is not in the mapping table yet
       if (!menuMap[currentParentKey]) {
-        // 那就把映射上去 只有子集属性<Array>类型
+        // Then map is ,it only has the "children" property of Array type
         menuMap[currentParentKey] = {
           [MENU_CHILDREN]: [item],
         };
@@ -113,22 +124,21 @@ export function formatMenu(list: MenuList) {
         menuMap[currentParentKey] &&
         !menuMap[currentParentKey][MENU_CHILDREN]
       ) {
-        // 父级在映射表上 不过 没子集
+        // The parent is on the mapping table, but there is no child set
         menuMap[currentParentKey][MENU_CHILDREN] = [item];
       } else {
-        // 父级有 子集合也有
+        // The parent has a set of children
         menuMap[currentParentKey][MENU_CHILDREN]?.push(item);
       }
     } else {
-      // 当前项是没有父级 那当前项就是父级项
+      // If the current item does not have a parent, then the current item is a parent item
       parentMenu.push(item);
     }
   });
   return parentMenu;
 }
 
-
-function reduceMenuList(list: MenuList, path: string = ''): MenuList {
+function reduceMenuList(list: MenuList, path: string = ""): MenuList {
   const data: MenuList = [];
   list.forEach((i) => {
     const { children, ...item } = i;
@@ -151,15 +161,15 @@ function saveLocalMenu(list: MenuResponse) {
 }
 
 function saveToken(token: Token) {
-  setKey(true, TOKEN, token)
+  setKey(true, TOKEN, token);
 }
 
 function saveWebToken(token: Token) {
-  setKey(true, WEBTOKEN, token)
+  setKey(true, WEBTOKEN, token);
 }
 
 function getToken(): Token {
-  return getKey(true, TOKEN)
+  return getKey(true, TOKEN);
 }
 
 function getKey(isLocal: boolean, key: string) {
@@ -215,5 +225,5 @@ export {
   stopPropagation,
   getLayoutMode,
   setLayoutMode,
-  clearLocalDatas
+  clearLocalDatas,
 };

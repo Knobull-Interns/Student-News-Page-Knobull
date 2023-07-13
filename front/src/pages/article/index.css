@@ -7,7 +7,10 @@
   line-height: 40px;
   font-size: 16px;
 }
-.powermenu-container .tree-data .ant-tree-node-content-wrapper .ant-tree-iconEle,
+.powermenu-container
+  .tree-data
+  .ant-tree-node-content-wrapper
+  .ant-tree-iconEle,
 .powermenu-container .tree-data .ant-tree-switcher .ant-tree-iconEle {
   line-height: inherit;
 }

@@ -4,7 +4,7 @@ import TypeModal, { Info } from "@/components/modal/type";
 import { getPower } from "@/api";
 import MyTable from "@/components/table";
 import "./index.less";
-import { MapKey, MenuList, PowerList } from "@/types"
+import { MapKey, MenuList, PowerList } from "@/types";
 
 function formatMenuKey(list: MenuList) {
   return list.map((item) => {
@@ -30,7 +30,7 @@ function useTypes() {
   const modalControl = (info: Info, open: boolean) => {
     setChoose(info);
     setShow(open);
-  }
+  };
   const activeCol = {
     dataIndex: "active",
     key: "active",
@@ -38,20 +38,20 @@ function useTypes() {
     align: "center",
     render: (text: any, record: any) => (
       <Button type="link" onClick={() => modalControl(record, true)}>
-        编辑
+        Edit
       </Button>
     ),
-  }
+  };
   const renderTitle = () => (
     <Row justify="space-between" gutter={80}>
-      <Col style={{ lineHeight: "32px" }}>用户信息列表</Col>
+      <Col style={{ lineHeight: "32px" }}>Users Info List</Col>
       <Col>
         <Button type="primary" onClick={() => modalControl(null, true)}>
-          添加管理权限
+          Add Administrator
         </Button>
       </Col>
     </Row>
-  )
+  );
   const getTypeData = () => {
     getPower().then((res) => {
       if (res.status === 0) {
@@ -61,7 +61,7 @@ function useTypes() {
         setCol(res.mapKey);
       }
     });
-  }
+  };
   return {
     renderTitle,
     tableCol,

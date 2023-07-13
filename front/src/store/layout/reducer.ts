@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import { getLayoutMode } from "@/utils";
-import { LayoutAction, LayoutMode } from "@/types"
+import { LayoutAction, LayoutMode } from "@/types";
 
 const layout: LayoutMode[] = getLayoutMode() || [actionTypes.TWO_COLUMN];
 
@@ -9,26 +9,26 @@ export default function reducer(state = layout, action: LayoutAction) {
   switch (type) {
     case "push": {
       if (!mode) {
-        return state
+        return state;
       }
-      let lastMode = state[state.length - 1]
+      let lastMode = state[state.length - 1];
       if (lastMode === mode) {
-        return state
+        return state;
       }
-      const sliceNum = state.length > 1 ? 1 : 0
-      state = state.slice(sliceNum).concat(mode)
-      return state
+      const sliceNum = state.length > 1 ? 1 : 0;
+      state = state.slice(sliceNum).concat(mode);
+      return state;
     }
     case "pop": {
       if (state.length > 1) {
-        state = state.slice(0, 1)
+        state = state.slice(0, 1);
       } else {
-        state = layout
+        state = layout;
       }
-      return state
+      return state;
     }
     default: {
-      return state
+      return state;
     }
   }
 }

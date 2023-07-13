@@ -42,43 +42,43 @@ export default function ContextMenu({ isCurrent, visible, x, y, setVisible, onCl
     const newStyle = { left, top, visibility }
     setStyle(newStyle)
   }, [x, y, visibility, ref])
-  // 关闭 菜单
+  // Close Menu
   const closeMenu = useCallback(() => {
     if (visibility === "visible") {
-      console.log("关闭弹窗");
+      console.log("Close Popup");
       setVisible(false)
     }
     return false
   }, [setVisible, visibility])
 
-  // 关闭所有选项
+  // Close all tabs
   const closeAll = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation()
-    console.log("关闭全部");
+    console.log("Close All");
     onClose("all")
     closeMenu()
   }, [closeMenu, onClose])
 
-  // 关闭右侧 选项
+  // Close Right Tabs
   const closeRight = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation()
-    console.log("右");
+    console.log("Right");
     onClose("right")
     closeMenu()
   }, [closeMenu, onClose])
 
-  // 关闭左侧 选项
+  // Close Left Tabs
   const closeLeft = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation()
-    console.log("左");
+    console.log("Left");
     onClose("left")
     closeMenu()
   }, [closeMenu, onClose])
 
-  // 关闭当前选项
+  // Close Current Tab
   const closeCurrent = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation()
-    console.log("当前");
+    console.log("Current");
     onClose("current")
     closeMenu()
   }, [closeMenu, onClose])
@@ -89,11 +89,11 @@ export default function ContextMenu({ isCurrent, visible, x, y, setVisible, onCl
     className={styles.centextMenu}
   >
     <ul style={style} ref={ref}>
-      <li onMouseUp={closeAll}>关闭所有</li>
-      <li onMouseUp={closeRight}>关闭右侧</li>
-      <li onMouseUp={closeLeft}>关闭左侧</li>
+      <li onMouseUp={closeAll}>Close All</li>
+      <li onMouseUp={closeRight}>Close Right</li>
+      <li onMouseUp={closeLeft}>CLose Left</li>
       {
-        isCurrent && <li onMouseUp={closeCurrent}>关闭当前</li>
+        isCurrent && <li onMouseUp={closeCurrent}>Close Current</li>
       }
     </ul>
   </div>

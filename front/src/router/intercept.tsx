@@ -11,31 +11,47 @@ const scrollPage = () => {
     left: 0,
     behavior: "smooth",
   });
-}
+};
 
 interface Props {
-  [MENU_PATH]?: string
-  [MENU_TITLE]?: string
-  pageKey: string
-  menuList: Array<MenuItem>
-  [key: string]: any
+  [MENU_PATH]?: string;
+  [MENU_TITLE]?: string;
+  pageKey: string;
+  menuList: Array<MenuItem>;
+  [key: string]: any;
 }
 
-function Intercept({ menuList, components, [MENU_TITLE]: title, [MENU_PATH]: pagePath, pageKey, [MENU_LAYOUT]: layout }: Props) {
-  const [pageInit, setPageInit] = useState(false)
-  const location = useLocation()
-  const { stateSetOpenMenuKey, stateSetSelectMenuKey, stateAddOpenedMenu, stateSetCurrentPath } = useDispatchMenu()
-  const { stateChangeLayout } = useDispatchLayout()
+function Intercept({
+  menuList,
+  components,
+  [MENU_TITLE]: title,
+  [MENU_PATH]: pagePath,
+  pageKey,
+  [MENU_LAYOUT]: layout,
+}: Props) {
+  const [pageInit, setPageInit] = useState(false);
+  const location = useLocation();
+  const {
+    stateSetOpenMenuKey,
+    stateSetSelectMenuKey,
+    stateAddOpenedMenu,
+    stateSetCurrentPath,
+  } = useDispatchMenu();
+  const { stateChangeLayout } = useDispatchLayout();
   const currentPath = useMemo(() => {
-    const { pathname, search } = location
-    return pathname + search
-  }, [location])
+    const { pathname, search } = location;
+    return pathname + search;
+  }, [location]);
 
-  // 监听 location 改变
+  // Listen for path changes
   const onPathChange = useCallback(() => {
-    stateSetCurrentPath(currentPath)
-    stateAddOpenedMenu({ key: pageKey, path: currentPath, title: title || "未设置标题信息" });
-  }, [currentPath, pageKey, title, stateSetCurrentPath, stateAddOpenedMenu])
+    stateSetCurrentPath(currentPath);
+    stateAddOpenedMenu({
+      key: pageKey,
+      path: currentPath,
+      title: title || "Title information not set",
+    });
+  }, [currentPath, pageKey, title, stateSetCurrentPath, stateAddOpenedMenu]);
 
   const setCurrentPageInfo = useCallback(() => {
     if (!title) {
@@ -46,45 +62,58 @@ function Intercept({ menuList, components, [MENU_TITLE]: title, [MENU_PATH]: pag
     let openkey = getMenuParentKey(menuList, pageKey);
     stateSetOpenMenuKey(openkey);
     stateAddOpenedMenu({ key: pageKey, path: currentPath, title });
-  }, [currentPath, menuList, title, pageKey, stateSetOpenMenuKey, stateSetSelectMenuKey, stateAddOpenedMenu])
+  }, [
+    currentPath,
+    menuList,
+    title,
+    pageKey,
+    stateSetOpenMenuKey,
+    stateSetSelectMenuKey,
+    stateAddOpenedMenu,
+  ]);
 
   const init = useCallback(() => {
-    setCurrentPageInfo()
-    scrollPage()
-  }, [setCurrentPageInfo])
+    setCurrentPageInfo();
+    scrollPage();
+  }, [setCurrentPageInfo]);
 
   useEffect(() => {
     if (init && !pageInit) {
-      init()
-      setPageInit(true)
+      init();
+      setPageInit(true);
     }
-  }, [init, pageInit])
+  }, [init, pageInit]);
 
   useEffect(() => {
     if (pageInit) {
-      onPathChange()
+      onPathChange();
     }
-  }, [onPathChange, pageInit])
+  }, [onPathChange, pageInit]);
 
-  // 切换布局
+  // Switch layout
   useEffect(() => {
-    layout && stateChangeLayout('push', layout)
-  }, [layout])
+    layout && stateChangeLayout("push", layout);
+  }, [layout]);
 
   const hasPath = !menuList.find(
     (m) => (m[MENU_PARENTPATH] || "") + m[MENU_PATH] === pagePath
   );
 
-  if (hasPath && pagePath !== "/" && pagePath !== "/admin" && pagePath !== "*") {
+  if (
+    hasPath &&
+    pagePath !== "/" &&
+    pagePath !== "/admin" &&
+    pagePath !== "*"
+  ) {
     return (
       <Error
         status="403"
-        errTitle="权限不够"
+        errTitle="Insufficient Permissions"
         subTitle="Sorry, you are not authorized to access this page."
       />
     );
   }
 
-  return (components);
+  return components;
 }
-export default Intercept
+export default Intercept;

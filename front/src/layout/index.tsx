@@ -4,7 +4,7 @@ import "./index.less";
 import { useStateLayout } from "@/store/hooks";
 
 const LayoutContainer = () => {
-  const LayoutMode = useStateLayout()
+  const LayoutMode = useStateLayout();
   switch (LayoutMode) {
     case ActionTypes.SINGLE_COLUMN:
       return <SingleColumn />;
@@ -13,10 +13,10 @@ const LayoutContainer = () => {
     case ActionTypes.TWO_FLANKS:
       return <TwoFlanks />;
     case ActionTypes.FULL_SCREEN:
-      return <FullScreen />
+      return <FullScreen />;
     default:
       return <TowColumn />;
   }
-}
+};
 
-export default LayoutContainer
+export default LayoutContainer;

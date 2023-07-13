@@ -6,13 +6,13 @@ import Login from "@/pages/login";
 import { getLocalUser } from "@/utils";
 import { useDispatchUser, useStateUserInfo } from "@/store/hooks";
 
-const isHash = import.meta.env.REACT_APP_ROUTER_ISHASH === "1"
-const RouterBasename = import.meta.env.REACT_APP_ROUTERBASE || "/"
+const isHash = import.meta.env.REACT_APP_ROUTER_ISHASH === "1";
+const RouterBasename = import.meta.env.REACT_APP_ROUTERBASE || "/";
 
 function AppRouter() {
   const [loading, setLoad] = useState(true);
-  const { stateSetUser } = useDispatchUser()
-  const userInfo = useStateUserInfo().userInfo
+  const { stateSetUser } = useDispatchUser();
+  const userInfo = useStateUserInfo().userInfo;
   useEffect(() => {
     if (!userInfo) {
       let localInfo = getLocalUser();
@@ -28,11 +28,14 @@ function AppRouter() {
     return (
       <Spin size="large" wrapperClassName="loading-page" tip="Loading..." />
     );
-  if (!userInfo && window.location.pathname.indexOf('admin') !== -1) return <Login />;
+  if (!userInfo && window.location.pathname.indexOf("admin") !== -1)
+    return <Login />;
   if (isHash) {
-    return <HashRouter>
-      <Layout />
-    </HashRouter>
+    return (
+      <HashRouter>
+        <Layout />
+      </HashRouter>
+    );
   }
 
   return (

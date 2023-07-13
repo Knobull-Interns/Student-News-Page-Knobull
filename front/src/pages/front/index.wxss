@@ -11,7 +11,7 @@ body,
 .top_header {
   background-color: #000;
   height: 105px;
-  border-bottom: 1px solid #3F4451;
+  border-bottom: 1px solid #3f4451;
 }
 .header__Container {
   height: 60px;

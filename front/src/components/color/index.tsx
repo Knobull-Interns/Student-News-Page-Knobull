@@ -20,6 +20,7 @@ interface ColorProps {
 
 const getPositon = (x: number, y: number): Position => ({ left: x, top: y });
 
+// Color component
 function Color({
   color,
   pageX,
@@ -33,17 +34,17 @@ function Color({
     hex: color,
   } as ColorResult);
 
-  // 变化重置
+  // Reset when value changes
   useEffect(() => {
     if (color) {
       setColor({ hex: color } as ColorResult);
     }
   }, [color]);
 
-  // 同步改变
+  // Synchronous change
   const onChange = useCallback((v: ColorResult) => setColor(v), []);
 
-  // 确认
+  // confirm
   const onChangeComplete = useCallback(() => {
     onSureChange(changeColor, colorKey);
   }, [changeColor, onSureChange, colorKey]);

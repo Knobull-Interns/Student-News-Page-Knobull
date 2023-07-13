@@ -1,16 +1,18 @@
 import * as actionTypes from "./actionTypes";
-import { MenuAction, MenuState } from "@/types"
-
+import { MenuAction, MenuState } from "@/types";
 
 const initGlobalState: MenuState = {
-  openedMenu: [], // 保存已经打开的菜单栏 用于顶部导航
-  openMenuKey: [], // 打开的菜单栏的key  用于侧边栏
-  selectMenuKey: [], // 选中菜单栏的key  用户侧边栏
+  openedMenu: [], // Save the already opened menu for the top navigation
+  openMenuKey: [], // The key of the opened menue for the sidebar
+  selectMenuKey: [], // The key of the selected menu for the sidebar
   menuList: [],
-  currentPath: "", // 页面当前路径
+  currentPath: "", // Current page path
 };
 
-export default function reducer(state = initGlobalState, action: MenuAction): MenuState {
+export default function reducer(
+  state = initGlobalState,
+  action: MenuAction
+): MenuState {
   const { type, menuItem, keys, list, path } = action;
   switch (type) {
     case actionTypes.ADDOPENTMENU: {
@@ -47,7 +49,7 @@ export default function reducer(state = initGlobalState, action: MenuAction): Me
       return { ...state, menuList: list };
     }
     case actionTypes.SETCURRENTPATH: {
-      return { ...state, currentPath: path }
+      return { ...state, currentPath: path };
     }
     default: {
       return state;

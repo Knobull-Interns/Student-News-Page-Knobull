@@ -3,26 +3,26 @@ import MyIcon from "@/components/icon";
 import MyForm, { FormItemData } from "@/components/form";
 import { Modal, Select, message, FormInstance } from "antd";
 import { addMenu, getMenuInfo, editMenu } from "@/api";
-import { MenuList, MenuItem } from "@/types"
-import { ModalType, SelectInfo } from "@/pages/power/menu"
+import { MenuList, MenuItem } from "@/types";
+import { ModalType, SelectInfo } from "@/pages/power/menu";
 import ICON_JSON from "@/assets/json/iconfont.json";
 
 import "./index.less";
 interface IconItem {
-  icon_id: string,
-  name: string,
-  font_class: string,
-  unicode: string,
-  unicode_decimal: number
+  icon_id: string;
+  name: string;
+  font_class: string;
+  unicode: string;
+  unicode_decimal: number;
 }
 
 interface MenuModalProps {
-  info: SelectInfo
-  modalType: ModalType
-  isShow: boolean
-  setShow: (s: boolean) => void
-  updateMenu: () => void
-  menus: MenuList
+  info: SelectInfo;
+  modalType: ModalType;
+  isShow: boolean;
+  setShow: (s: boolean) => void;
+  updateMenu: () => void;
+  menus: MenuList;
 }
 
 interface ActiveFn {
@@ -38,63 +38,63 @@ const titleType: {
   addChild: string;
   edit: string;
 } = {
-  add: "新增菜单",
-  addChild: "新增子菜单",
-  edit: "修改菜单信息",
+  add: "Add Menu",
+  addChild: "Add subMenu",
+  edit: "Modyfy Menu Information",
 };
 
 const initFormItems: FormItemData[] = [
   {
     itemType: "input",
     itemProps: {
-      rules: [{ required: true, message: "请填写菜单标题" }],
-      label: "菜单标题",
+      rules: [{ required: true, message: "Please fill in the menu title" }],
+      label: "Menu Title",
       name: "title",
     },
     childProps: {
-      placeholder: "菜单标题",
+      placeholder: "Menu Title",
     },
   },
   {
     itemType: "input",
     itemProps: {
-      rules: [{ required: true, message: "请填写菜单路径" }],
-      label: "菜单路径",
+      rules: [{ required: true, message: "Please fill in the menu path" }],
+      label: "Menu Path",
       name: "path",
     },
     childProps: {
-      placeholder: "菜单路径",
+      placeholder: "Menu Path",
     },
   },
   {
     itemType: "input",
     itemProps: {
-      rules: [{ required: true, message: "请填写菜单key值" }],
-      label: "菜单key",
+      rules: [{ required: true, message: "Please fill in the menu key" }],
+      label: "Menu Key",
       name: "key",
     },
     childProps: {
-      placeholder: "菜单key值必须唯一，否则创建失败",
+      placeholder: "Menu Key must be unique, otherwise creation fails",
     },
   },
   {
     itemType: "select",
     itemProps: {
-      label: "父级菜单",
+      label: "Parent Menu",
       name: "parentKey",
     },
     childProps: {
-      placeholder: "父级菜单",
+      placeholder: "Parent Menu",
     },
   },
   {
     itemType: "select",
     itemProps: {
-      label: "菜单图标",
+      label: "Menu Icon",
       name: "icon",
     },
     childProps: {
-      placeholder: "图标",
+      placeholder: "Icon",
       allowClear: true,
       showSearch: true,
       getPopupContainer: (v: ReactNode) => v,
@@ -111,14 +111,14 @@ const initFormItems: FormItemData[] = [
   {
     itemType: "radio",
     itemProps: {
-      rules: [{ required: true, message: "请选择菜单缓存模式" }],
+      rules: [{ required: true, message: "Please select the menu cache mode" }],
       name: "keepAlive",
-      label: "页面是否缓存",
+      label: "Is the page cached",
     },
     childProps: {
       options: [
-        { label: "是", value: "true" },
-        { label: "否", value: "false" },
+        { label: "Yes", value: "true" },
+        { label: "No", value: "false" },
       ],
     },
   },
@@ -131,15 +131,15 @@ const initFormItems: FormItemData[] = [
           type: "number",
           min: 0,
           max: 10000,
-          message: "请正确填写菜单排序大小",
+          message: "Please fill in the correct menu order size",
         },
-        { required: true, message: "请填写菜单排序大小" },
+        { required: true, message: "Please fill in the menu order size" },
       ],
       name: "order",
-      label: "菜单排序",
+      label: "Menu Sorting",
     },
     childProps: {
-      placeholder: "数值越小越靠前",
+      placeholder: "The smaller the value, the higher the priority",
     },
   },
 ];
@@ -160,7 +160,7 @@ export default function MenuModal({
       let items = [...initFormItems.map((i) => ({ ...i }))];
       items.forEach((i) => {
         if (i.itemProps.name === "parentKey") {
-          i.childProps = { ...i.childProps }
+          i.childProps = { ...i.childProps };
           i.childProps.disabled =
             modalType === "addChild" || (modalType === "edit" && info.isParent);
           i.childProps.children = menus.map((menu) => (
@@ -194,12 +194,13 @@ export default function MenuModal({
       });
     }
   }, [modalType, isShow, info, form]);
-  // 提交表单
+  // Submit Form
   const submit = () => {
-    form && form.validateFields().then((values) => {
-      let fn = activeFn[modalType];
-      fn(values);
-    });
+    form &&
+      form.validateFields().then((values) => {
+        let fn = activeFn[modalType];
+        fn(values);
+      });
   };
 
   const onCancel = () => {
@@ -231,8 +232,8 @@ export default function MenuModal({
       maskClosable={false}
       title={titleType[modalType]}
       open={isShow}
-      okText="确认"
-      cancelText="取消"
+      okText="Confirm"
+      cancelText="Cancel"
       onCancel={onCancel}
       onOk={submit}
     >

@@ -10,10 +10,9 @@ const loaddingCom = (
       minHeight: 20,
       fontSize: 14,
     }}
-    tip="组件加载中...."
+    tip="Component loading...."
   />
 );
-
 
 const Line = loadable(() => import("./line"), { fallback: loaddingCom });
 const Bar = loadable(() => import("./bar"), { fallback: loaddingCom });

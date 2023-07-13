@@ -4,25 +4,27 @@ import routerList, { RouterInfo } from "./list";
 import Intercept from "./intercept";
 import { getMenus } from "@/common";
 import { formatMenu, reduceMenuList } from "@/utils";
-import { MenuList } from "@/types"
+import { MenuList } from "@/types";
 import { useDispatchMenu } from "@/store/hooks";
 
-
 const Router = () => {
-  const { stateSetMenuList } = useDispatchMenu()
-  const [mergeRouterList, setMergeList] = useState<RouterInfo[]>([]);// 本地 和 接口返回的路由列表 合并的结果
-  const [ajaxUserMenuList, setAjaxUserMenuList] = useState<MenuList>([]); // 网络请求回来的 路由列表
+  const { stateSetMenuList } = useDispatchMenu();
+  const [mergeRouterList, setMergeList] = useState<RouterInfo[]>([]); // The result of merging local and returned route list from API
+  const [ajaxUserMenuList, setAjaxUserMenuList] = useState<MenuList>([]); // The route list returned from the network request
 
   useEffect(() => {
     if (stateSetMenuList && typeof stateSetMenuList === "function") {
       getMenus().then((list) => {
-        const formatList = formatMenu(list)
+        const formatList = formatMenu(list);
         const userMenus = reduceMenuList(formatList);
-        // 把请求的数据 和 本地pages页面暴露出的路由列表合并
+        // Merge the data from the request and the route list exposed by the local pages
         let routers = routerList.map((router) => {
-          let find = userMenus.find((i) => (i[MENU_PARENTPATH] || "") + i[MENU_PATH] === router[MENU_PATH]);
+          let find = userMenus.find(
+            (i) =>
+              (i[MENU_PARENTPATH] || "") + i[MENU_PATH] === router[MENU_PATH]
+          );
           if (find) {
-            router = { ...find, ...router }; // 本地 优先 接口结果
+            router = { ...find, ...router }; // Local takes precedence over API result
           } else {
             router[MENU_KEY] = router[MENU_PATH];
           }
@@ -37,9 +39,8 @@ const Router = () => {
     }
   }, [stateSetMenuList]);
 
-
   const routerBody = useMemo(() => {
-    // 监听 本地路由列表   同时存在长度大于1时 渲染路由组件
+    // Listen to local routing list, render routing component when they both have length greater than 1
     if (mergeRouterList.length) {
       return mergeRouterList.map((item) => {
         let { [MENU_KEY]: key, [MENU_PATH]: path } = item;
@@ -47,16 +48,14 @@ const Router = () => {
           <Route
             key={key}
             path={path}
-            element={<Intercept
-              {...item}
-              menuList={ajaxUserMenuList}
-              pageKey={key}
-            />}
+            element={
+              <Intercept {...item} menuList={ajaxUserMenuList} pageKey={key} />
+            }
           />
         );
       });
     }
-  }, [ajaxUserMenuList, mergeRouterList])
+  }, [ajaxUserMenuList, mergeRouterList]);
 
   return <Routes>{routerBody}</Routes>;
 };

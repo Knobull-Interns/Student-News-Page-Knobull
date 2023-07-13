@@ -1,26 +1,34 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Form, Input, Select, Radio, Switch, InputNumber, FormInstance } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Radio,
+  Switch,
+  InputNumber,
+  FormInstance,
+} from "antd";
 
 interface MyFormProps {
-  handleInstance: (form: FormInstance) => void
-  items: FormItemData[]
-  [key: string]: any
+  handleInstance: (form: FormInstance) => void;
+  items: FormItemData[];
+  [key: string]: any;
 }
 export interface FormItemData {
-  itemType: string
+  itemType: string;
   childProps?: {
-    [key: string]: any
-  }
+    [key: string]: any;
+  };
   itemProps: {
     rules?: {
-      required?: boolean
-      message: string
-      [key: string]: any
-    }[]
-    label?: string
-    name: string
-    [key: string]: any
-  }
+      required?: boolean;
+      message: string;
+      [key: string]: any;
+    }[];
+    label?: string;
+    name: string;
+    [key: string]: any;
+  };
 }
 
 function getChild(type: string): any {
@@ -36,7 +44,7 @@ function getChild(type: string): any {
     case "inputNumber":
       return InputNumber;
     case "inputText":
-      return Input.TextArea
+      return Input.TextArea;
     default:
       return null;
   }
@@ -51,7 +59,11 @@ function renderItem({ itemType, childProps, itemProps }: FormItemData) {
   );
 }
 
-export default function MyForm({ items, handleInstance, ...props }: MyFormProps) {
+export default function MyForm({
+  items,
+  handleInstance,
+  ...props
+}: MyFormProps) {
   const [formInstance] = Form.useForm();
   const [formBody, setFormBody] = useState<ReactNode | null>(null);
   useEffect(() => {

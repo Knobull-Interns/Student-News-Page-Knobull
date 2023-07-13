@@ -3,11 +3,11 @@ import Header from "../header";
 import Menu from "../siderMenu";
 import TopMenu from "../topMenu";
 import Router from "@/router";
-import { useStyle } from "../style"
+import { useStyle } from "../style";
 const { Content } = Layout;
 
 const TwoFlanks = () => {
-  const { styles } = useStyle()
+  const { styles } = useStyle();
   return (
     <Layout className="my-layout-body twoflanks">
       <Menu />

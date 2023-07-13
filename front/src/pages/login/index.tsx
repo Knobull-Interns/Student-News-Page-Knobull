@@ -5,11 +5,9 @@ import MyIcon from "@/components/icon";
 import { saveUser, getLocalUser, saveToken } from "@/utils";
 import { setUserInfoAction } from "@/store/user/action";
 import { login } from "@/api";
-import { UserInfo } from "@/types"
+import { UserInfo } from "@/types";
 import "./index.less";
 import { useThemeToken } from "@/hooks";
-
-
 
 const IPT_RULE_USERNAME = [
   {
@@ -27,30 +25,39 @@ const IPT_RULE_PASSWORD = [
 
 function Login() {
   const [btnLoad, setBtnLoad] = useState(false);
-  const dispatch = useDispatch()
-  const setUserInfo = useCallback((info: UserInfo) => dispatch(setUserInfoAction(info)), [dispatch])
-  const token = useThemeToken()
-  const onFinish = useCallback((values: any) => {
-    setBtnLoad(true);
-    login(values)
-      .then((res) => {
-        const { data, msg, status, token } = res;
-        setBtnLoad(false);
-        if (status === 1 && !data) return;
-        const info = Object.assign({ isLogin: true }, data)
-        saveToken(token);
-        message.success('Login success!');
-        if (values.remember) {
-          saveUser(info);
-        }
-        setUserInfo(info);
-      })
-      .catch(() => {
-        setBtnLoad(false);
-      });
-  }, [setUserInfo]);
+  const dispatch = useDispatch();
+  const setUserInfo = useCallback(
+    (info: UserInfo) => dispatch(setUserInfoAction(info)),
+    [dispatch]
+  );
+  const token = useThemeToken();
+  const onFinish = useCallback(
+    (values: any) => {
+      setBtnLoad(true);
+      login(values)
+        .then((res) => {
+          const { data, msg, status, token } = res;
+          setBtnLoad(false);
+          if (status === 1 && !data) return;
+          const info = Object.assign({ isLogin: true }, data);
+          saveToken(token);
+          message.success("Login success!");
+          if (values.remember) {
+            saveUser(info);
+          }
+          setUserInfo(info);
+        })
+        .catch(() => {
+          setBtnLoad(false);
+        });
+    },
+    [setUserInfo]
+  );
   return (
-    <div className="login-container" style={{ backgroundColor: token.colorBgContainer }}>
+    <div
+      className="login-container"
+      style={{ backgroundColor: token.colorBgContainer }}
+    >
       <div className="wrapper">
         <div className="title">news admin</div>
         <Form

@@ -11,15 +11,14 @@ import {
 } from "@/utils";
 import { useCallback } from "react";
 import { useDispatchUser, useStateUserInfo } from "@/store/hooks";
-import { useStyle } from "./style"
+import { useStyle } from "./style";
 interface LayoutHeaderProps {
-  children: JSX.Element | null
+  children: JSX.Element | null;
 }
 
 const { Header } = Layout;
 
-
-const RightMenu = ({ logout }: { logout: () => void; }) => (
+const RightMenu = ({ logout }: { logout: () => void }) => (
   <Menu className="right-down">
     <Menu.Item
       key="logout"
@@ -34,9 +33,9 @@ const RightMenu = ({ logout }: { logout: () => void; }) => (
 const getPopupContainer = (HTMLElement: HTMLElement) => HTMLElement;
 
 const LayoutHeader = ({ children }: LayoutHeaderProps) => {
-  const { styles } = useStyle()
-  const userInfo = useStateUserInfo().userInfo
-  const { stateClearUser } = useDispatchUser()
+  const { styles } = useStyle();
+  const userInfo = useStateUserInfo().userInfo;
+  const { stateClearUser } = useDispatchUser();
   const logout = useCallback(() => {
     clearLocalDatas([USER_INFO, TOKEN, MENU]);
     if (userInfo) {
@@ -46,7 +45,10 @@ const LayoutHeader = ({ children }: LayoutHeaderProps) => {
     window.location.reload();
     stateClearUser();
   }, [userInfo, stateClearUser]);
-  const dropdownRender = useCallback(() => <RightMenu logout={logout} />, [logout])
+  const dropdownRender = useCallback(
+    () => <RightMenu logout={logout} />,
+    [logout]
+  );
   return (
     <Header className={styles.header}>
       <div className="logo">

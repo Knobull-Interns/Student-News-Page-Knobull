@@ -1,5 +1,5 @@
 import * as ActionTypes from "./actionTypes";
-import { OpenedMenu, MenuItem } from "@/types"
+import { OpenedMenu, MenuItem } from "@/types";
 export const addOpenedMenu = (menuItem: OpenedMenu) => ({
   type: ActionTypes.ADDOPENTMENU,
   menuItem,
@@ -25,8 +25,7 @@ export const setUserMenu = (list: MenuItem[]) => ({
   list,
 });
 
-
 export const setCurrentPath = (path: string) => ({
   type: ActionTypes.SETCURRENTPATH,
-  path
-})
+  path,
+});

@@ -8,12 +8,14 @@ const initFormItems: FormItemData[] = [
   {
     itemType: "input",
     itemProps: {
-      rules: [{ required: true, message: "请填写权限名称" }],
-      label: "权限名称",
+      rules: [
+        { required: true, message: "Please fill in the access right name" },
+      ],
+      label: "Access Right name",
       name: "name",
     },
     childProps: {
-      placeholder: "权限名称",
+      placeholder: "Access Right Name",
     },
   },
   {
@@ -24,82 +26,97 @@ const initFormItems: FormItemData[] = [
     },
   },
 ];
-export type Info = { name: string, type: string, menu_id: string } | null
+export type Info = { name: string; type: string; menu_id: string } | null;
 interface ModalProps {
-  info: Info
-  isShow: boolean
-  onCancel: (i: Info, b: boolean) => void
-  onOk: () => void
-  menuList: MenuList
+  info: Info;
+  isShow: boolean;
+  onCancel: (i: Info, b: boolean) => void;
+  onOk: () => void;
+  menuList: MenuList;
 }
-type CheckList = Array<string | number>
+type CheckList = Array<string | number>;
 const ColorStyle = {
   color: "red",
 };
 
-function pushParentId(checkList: CheckList, list: MenuList, id: MenuItem["key"]) {
-  const info = list.find(item => item[MENU_KEY] === id)
+function pushParentId(
+  checkList: CheckList,
+  list: MenuList,
+  id: MenuItem["key"]
+) {
+  const info = list.find((item) => item[MENU_KEY] === id);
   if (!info) {
-    return
+    return;
   }
 
-  const parentId: string = info.parentId
+  const parentId: string = info.parentId;
   if (parentId && !checkList.includes(parentId)) {
-    checkList.push(parentId)
-    pushParentId(checkList, list, parentId)
+    checkList.push(parentId);
+    pushParentId(checkList, list, parentId);
   }
 }
-function filterParentId(parent: CheckList, list: MenuList, id: MenuItem["key"]) {
-  const find = list.find(item => item[MENU_KEY] === id)
+function filterParentId(
+  parent: CheckList,
+  list: MenuList,
+  id: MenuItem["key"]
+) {
+  const find = list.find((item) => item[MENU_KEY] === id);
   if (!find) {
-    return
+    return;
   }
-  const pid = find.parentId
+  const pid = find.parentId;
   if (pid) {
     if (!parent.includes(pid)) {
-      parent.push(pid)
+      parent.push(pid);
     }
-    filterParentId(parent, list, pid)
+    filterParentId(parent, list, pid);
   }
 }
 
-export default function TypeModal({ info, isShow, onCancel, onOk, menuList }: ModalProps) {
+export default function TypeModal({
+  info,
+  isShow,
+  onCancel,
+  onOk,
+  menuList,
+}: ModalProps) {
   const [form, setForm] = useState<FormInstance | null>(null);
   const [menuId, setMenuId] = useState<number[]>([]);
   const reducerList = useMemo(() => {
     if (menuList) {
-      return reduceMenuList(menuList)
+      return reduceMenuList(menuList);
     }
-    return []
-  }, [menuList])
+    return [];
+  }, [menuList]);
 
   useEffect(() => {
     if (info && form && reducerList) {
-      const parentId: CheckList = [], childId: CheckList = []
-      const checkId = info.menu_id.split(",").map(Number)
-      checkId.forEach(id => {
-        filterParentId(parentId, reducerList, id)
+      const parentId: CheckList = [],
+        childId: CheckList = [];
+      const checkId = info.menu_id.split(",").map(Number);
+      checkId.forEach((id) => {
+        filterParentId(parentId, reducerList, id);
         if (!parentId.includes(id) && !childId.includes(id)) {
-          childId.push(id)
+          childId.push(id);
         }
-      })
+      });
       setMenuId(childId as Array<number>);
       form.setFieldsValue(info);
     } else {
-      setMenuId([])
+      setMenuId([]);
     }
   }, [info, form, reducerList]);
 
   const submit = () => {
     form?.validateFields().then((values) => {
       let fn = Boolean(info) ? editType : addType;
-      let checkMenuId: CheckList = []
-      menuId.forEach(id => {
+      let checkMenuId: CheckList = [];
+      menuId.forEach((id) => {
         if (!checkMenuId.includes(id)) {
-          checkMenuId.push(id)
+          checkMenuId.push(id);
         }
-        pushParentId(checkMenuId, reducerList, id)
-      })
+        pushParentId(checkMenuId, reducerList, id);
+      });
       console.log(checkMenuId);
       fn({ ...values, menu_id: checkMenuId }).then((res) => {
         if (res.status === 0) {
@@ -121,15 +138,17 @@ export default function TypeModal({ info, isShow, onCancel, onOk, menuList }: Mo
   return (
     <Modal
       maskClosable={false}
-      title={info ? "修改权限" : "添加权限"}
+      title={info ? "Modify Access Right" : "Add Access Right"}
       open={isShow}
-      okText="确认"
-      cancelText="取消"
+      okText="Confirm"
+      cancelText="Cancel"
       onCancel={close}
       onOk={submit}
     >
       <MyForm handleInstance={setForm} items={initFormItems} />
-      <h3 style={ColorStyle}>选中子菜单未选中父菜单的将不会显示</h3>
+      <h3 style={ColorStyle}>
+        Unchecked parent menus of the checked sub-menus will not be displayed
+      </h3>
       <Tree
         treeData={menuList}
         checkable

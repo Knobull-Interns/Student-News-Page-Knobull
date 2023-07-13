@@ -26,7 +26,7 @@ const listData = Array.from({ length: 10 }, (v, k) => ({
     "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
 }));
 
-const IconText = ({ icon, text }: { icon: ReactNode, text: string }) => (
+const IconText = ({ icon, text }: { icon: ReactNode; text: string }) => (
   <Space>
     {icon}
     {text}
@@ -34,58 +34,59 @@ const IconText = ({ icon, text }: { icon: ReactNode, text: string }) => (
 );
 
 const tabpanes = Array.from({ length: 3 }, (v, k) => ({
-  key: k + '',
+  key: k + "",
   label: `tab${k + 1}`,
-  children: (<List
-    itemLayout="vertical"
-    size="large"
-    header={<h2>Tab {k + 1}</h2>}
-    dataSource={listData}
-    renderItem={(item) => (
-      <List.Item
-        key={item.title}
-        actions={[
-          <IconText
-            icon={<MyIcon type="icon_collection" />}
-            text="156"
-            key="list-vertical-star-o"
-          />,
-          <IconText
-            icon={<MyIcon type="icon_zan" />}
-            text="156"
-            key="list-vertical-like-o"
-          />,
-          <IconText
-            icon={<MyIcon type="icon_voice" />}
-            text="2"
-            key="list-vertical-message"
-          />,
-        ]}
-        extra={
-          <img
-            width={272}
-            alt="logo"
-            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+  children: (
+    <List
+      itemLayout="vertical"
+      size="large"
+      header={<h2>Tab {k + 1}</h2>}
+      dataSource={listData}
+      renderItem={(item) => (
+        <List.Item
+          key={item.title}
+          actions={[
+            <IconText
+              icon={<MyIcon type="icon_collection" />}
+              text="156"
+              key="list-vertical-star-o"
+            />,
+            <IconText
+              icon={<MyIcon type="icon_zan" />}
+              text="156"
+              key="list-vertical-like-o"
+            />,
+            <IconText
+              icon={<MyIcon type="icon_voice" />}
+              text="2"
+              key="list-vertical-message"
+            />,
+          ]}
+          extra={
+            <img
+              width={272}
+              alt="logo"
+              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+            />
+          }
+        >
+          <List.Item.Meta
+            avatar={<Avatar src={item.avatar} />}
+            title={<a href={item.href}>{item.title}</a>}
+            description={item.description}
           />
-        }
-      >
-        <List.Item.Meta
-          avatar={<Avatar src={item.avatar} />}
-          title={<a href={item.href}>{item.title}</a>}
-          description={item.description}
-        />
-        {item.content}
-      </List.Item>
-    )}
-  />)
-})
-);
+          {item.content}
+        </List.Item>
+      )}
+    />
+  ),
+}));
 
 export default function Person() {
   const [tags, setTag] = useState(tagInitVal);
   const [isInput, setInput] = useState(false);
   const [value, setVal] = useState("");
-  const { styles } = useStyle()
+  const { styles } = useStyle();
   const addTags = () => {
     if (!value) {
       return setInput(false);
@@ -173,7 +174,9 @@ export default function Person() {
           </Card>
         </Col>
         <Col span={17} offset={1} className={styles.tabs}>
-          <Tabs defaultActiveKey="1" items={tabpanes}> </Tabs>
+          <Tabs defaultActiveKey="1" items={tabpanes}>
+            {" "}
+          </Tabs>
         </Col>
       </Row>
     </div>

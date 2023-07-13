@@ -1,90 +1,93 @@
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import "@wangeditor/editor/dist/css/style.css"; // import css
 
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
-import { Editor, Toolbar } from '@wangeditor/editor-for-react'
-import { IEditorConfig, i18nChangeLanguage } from '@wangeditor/editor'
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
+import { Editor, Toolbar } from "@wangeditor/editor-for-react";
+import { IEditorConfig, i18nChangeLanguage } from "@wangeditor/editor";
 import { getToken } from "@/utils";
 
-i18nChangeLanguage('en')
+i18nChangeLanguage("en");
 
-type InsertFnType = (url: string, alt: string, href: string) => void
+type InsertFnType = (url: string, alt: string, href: string) => void;
 
 const MyEditor = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => {
     return {
-      setHtml: setHtml
-    }
-  })
-  // editor 实例
-  const [editor, setEditor] = useState(null)
+      setHtml: setHtml,
+    };
+  });
+  // editor instance
+  const [editor, setEditor] = useState(null);
 
-  // 编辑器内容
-  const [html, setHtml] = useState('<p></p>')
+  // editor content
+  const [html, setHtml] = useState("<p></p>");
 
   useImperativeHandle(props.onRef, () => {
     return {
-      setHtml: setHtml
-    }
-  })
+      setHtml: setHtml,
+    };
+  });
 
   useEffect(() => {
-    props.onChange(html)
-  }, [html])
+    props.onChange(html);
+  }, [html]);
 
-  // 工具栏配置
+  // toolbar configuration
   const toolbarConfig = {
-    excludeKeys: [
-      'uploadVideo'
-    ]
-  }
+    excludeKeys: ["uploadVideo"],
+  };
 
-  // 编辑器配置
+  // editor configuration
   const editorConfig: Partial<IEditorConfig> = {
-    placeholder: 'please enter content...',
+    placeholder: "please enter content...",
     autoFocus: false,
-    MENU_CONF: {}
-  }
+    MENU_CONF: {},
+  };
 
-  editorConfig.MENU_CONF['uploadImage'] = {
-    server: '/api/upload',
-    fieldName: 'files',
+  editorConfig.MENU_CONF["uploadImage"] = {
+    server: "/api/upload",
+    fieldName: "files",
     customInsert(res: any, insertFn: InsertFnType) {
-      insertFn(res.message, '', '')
+      insertFn(res.message, "", "");
     },
     headers: {
-      Authorization: getToken()
-    }
-  }
+      Authorization: getToken(),
+    },
+  };
 
-  // 及时销毁 editor ，重要！
+  // promptly destory editor, important!
   useEffect(() => {
     return () => {
-      if (editor == null) return
-      editor.destroy()
-      setEditor(null)
-    }
-  }, [editor])
+      if (editor == null) return;
+      editor.destroy();
+      setEditor(null);
+    };
+  }, [editor]);
 
   return (
     <>
-      <div style={{ border: '1px solid #ccc', zIndex: 100 }}>
+      <div style={{ border: "1px solid #ccc", zIndex: 100 }}>
         <Toolbar
           editor={editor}
           defaultConfig={toolbarConfig}
           mode="default"
-          style={{ borderBottom: '1px solid #ccc' }}
+          style={{ borderBottom: "1px solid #ccc" }}
         />
         <Editor
           defaultConfig={editorConfig}
           value={html}
           onCreated={setEditor}
-          onChange={editor => setHtml(editor.getHtml())}
+          onChange={(editor) => setHtml(editor.getHtml())}
           mode="default"
-          style={{ height: '500px', overflowY: 'hidden' }}
+          style={{ height: "500px", overflowY: "hidden" }}
         />
       </div>
     </>
-  )
-})
+  );
+});
 
-export default MyEditor
+export default MyEditor;

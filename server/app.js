@@ -11,7 +11,7 @@ const secret = require("./config").jwt; //imoprts the secret key used to sign an
 const cors = require("cors"); //cross-origin resource sharing
 const app = express();
 
-app.use(cors()); //Default configuration, allows all origins.(Used by Jahong to fix CORS error, don't worry)
+app.use(cors()); //Default configuration, allows all origins.(Used to fix CORS error, don't worry)
 
 app.set("port", process.env.port || 3003);
 

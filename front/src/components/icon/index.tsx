@@ -1,14 +1,17 @@
 import { createFromIconfontCN } from "@ant-design/icons";
-import * as React from 'react';
-import iconfont from "/public/iconfont.js?url"
+import * as React from "react";
+import iconfont from "/public/iconfont.js?url";
 const MyIcon = createFromIconfontCN({
-  scriptUrl: iconfont, // 在 iconfont.cn 上生成
+  scriptUrl: iconfont, // generate on iconfont.cn
 });
 
 interface IconProps extends React.HTMLProps<HTMLSpanElement> {
-  type: string
+  type: string;
 }
-export default function Icon({ type, ...itemProps }: IconProps): React.ReactElement | null {
+export default function Icon({
+  type,
+  ...itemProps
+}: IconProps): React.ReactElement | null {
   if (!type) return null;
   return <MyIcon type={type} {...itemProps} />;
 }
