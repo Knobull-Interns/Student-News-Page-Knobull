@@ -63,7 +63,7 @@ export default [
   },
   {
     menu_id: 31,
-    title: "home",
+    title: "Knobull News",
     path: "/home",
     key: "home",
     parentKey: "font",
