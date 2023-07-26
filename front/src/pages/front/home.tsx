@@ -11,7 +11,16 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import "./index.less";
-import { Dropdown, Form, Input, Menu, message, Modal } from "antd";
+import {
+  Dropdown,
+  Form,
+  Input,
+  Menu,
+  message,
+  Modal,
+  Divider,
+  Button,
+} from "antd";
 const { confirm } = Modal;
 import MyIcon from "@/components/icon";
 import {
@@ -33,14 +42,14 @@ import logo from "../../assets/images/knobullpic.jpg";
 const IPT_RULE_USERNAME = [
   {
     required: true,
-    message: "Account",
+    message: "please input account",
   },
 ];
 
 const IPT_RULE_PASSWORD = [
   {
     required: true,
-    message: "Password",
+    message: "please input password",
   },
 ];
 
@@ -60,7 +69,7 @@ export default function Home() {
   const [webUserInfo, setWebUserInfo] = useState<any>(null);
   let params = {
     page: 1,
-    pageSize: 3,
+    pageSize: 4,
     categoryId: null,
   };
   const [loading, setLoading] = useState<boolean>(false);
@@ -104,16 +113,20 @@ export default function Home() {
     setLoading(true);
     getArticleList(params)
       .then((res) => {
-        const data = refresh ? res.data : list.concat(res.data);
-        setList(data);
-        if (data.length >= res.total) {
-          setHasMore(false);
-        } else {
-          params.page = params.page + 1;
-        }
+        setTimeout(() => {
+          const data = refresh ? res.data : list.concat(res.data);
+          setList(data);
+          if (data.length >= res.total) {
+            setHasMore(false);
+          } else {
+            params.page = params.page + 1;
+          }
+        }, 3000);
       })
       .finally(() => {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
       });
   };
 
@@ -131,7 +144,7 @@ export default function Home() {
         confirm({
           title: "Tip",
           icon: <ExclamationCircleFilled />,
-          content: `you need to pay $${item.charge} for read this article, confirm payment?`,
+          content: `you need to pay $${item.charge} for read this article,confirm payment?`,
           onOk() {
             payArticle({ userId: webUserInfo.id, articleId: item._id }).then(
               () => {
@@ -156,7 +169,7 @@ export default function Home() {
     });
     params = {
       page: 1,
-      pageSize: 3,
+      pageSize: 4,
       categoryId: id === -1 ? null : id,
     };
     getArticleData(true);
@@ -232,12 +245,14 @@ export default function Home() {
           dataLength={list.length}
           next={getArticleData}
           hasMore={hasMore}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Load more</b>
-            </p>
+          endMessage={<Divider plain>You've finished all the news</Divider>}
+          loader={
+            <Divider plain>
+              <Button disabled loading>
+                Loading
+              </Button>
+            </Divider>
           }
-          loader={<h4>Loading...</h4>}
         >
           {list.length > 0 ? (
             list.map((item) => (
@@ -264,7 +279,7 @@ export default function Home() {
                 fontSize: "20px",
               }}
             >
-              No Data
+              no data
             </div>
           )}
         </InfiniteScroll>
@@ -280,7 +295,7 @@ export default function Home() {
           <Form.Item name="name" rules={IPT_RULE_USERNAME}>
             <Input
               prefix={<MyIcon type="icon_nickname" />}
-              placeholder="Account"
+              placeholder="please input account"
             />
           </Form.Item>
           <Form.Item name="password" rules={IPT_RULE_PASSWORD}>
@@ -288,7 +303,7 @@ export default function Home() {
               prefix={<MyIcon type="icon_locking" />}
               type="password"
               autoComplete="off"
-              placeholder="Password"
+              placeholder="please input password"
             />
           </Form.Item>
         </Form>
