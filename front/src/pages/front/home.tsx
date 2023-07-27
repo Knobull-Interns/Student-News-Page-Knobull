@@ -67,11 +67,11 @@ export default function Home() {
     [dispatch]
   );
   const [webUserInfo, setWebUserInfo] = useState<any>(null);
-  let params = {
+  const [params, setParams] = useState<any>({
     page: 1,
     pageSize: 4,
-    categoryId: null,
-  };
+  });
+  const [categoryId, setCategoryId] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const logout = useCallback(() => {
@@ -98,7 +98,6 @@ export default function Home() {
 
   useEffect(() => {
     getClassificationData();
-    getArticleData();
     setWebUserInfo(getLocalWebUser());
   }, []);
 
@@ -111,7 +110,10 @@ export default function Home() {
   const getArticleData = (refresh) => {
     if (loading) return false;
     setLoading(true);
-    getArticleList(params)
+    getArticleList({
+      ...params,
+      categoryId,
+    })
       .then((res) => {
         setTimeout(() => {
           const data = refresh ? res.data : list.concat(res.data);
@@ -119,7 +121,10 @@ export default function Home() {
           if (data.length >= res.total) {
             setHasMore(false);
           } else {
-            params.page = params.page + 1;
+            setParams({
+              ...params,
+              page: params.page + 1,
+            });
           }
         }, 3000);
       })
@@ -167,14 +172,17 @@ export default function Home() {
       e = true;
       return e;
     });
-    params = {
+    setParams({
+      ...params,
       page: 1,
-      pageSize: 4,
-      categoryId: id === -1 ? null : id,
-    };
-    getArticleData(true);
+    });
+    setCategoryId(id === -1 ? null : id);
     setList([]);
   };
+
+  useEffect(() => {
+    getArticleData(true);
+  }, [categoryId]);
 
   const handleOk = () => {
     formRef.current?.submit();
