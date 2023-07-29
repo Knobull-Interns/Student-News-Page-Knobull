@@ -102,6 +102,7 @@ router.get("/api/articles", (req, res) => {
     .populate("categoryId")
     .limit(limit * 1)
     .skip(skip)
+    .sort({ _id: -1 })
     .then(async (articles) => {
       const count = await db.Article.find(params).count();
       res.send({ status: 0, total: count, data: articles });
