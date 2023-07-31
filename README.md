@@ -39,13 +39,13 @@
 <p>1. Clone the repository and navigate into the main directory</p>
 <p>2. To install dependencies, navigate to the <strong>"front"</strong> directory and run: </p>
 <p><strong>npm install</strong></p>
-<p>If encounter issues, try <strong>npm install --legacy-peer-deps</strong></p>
+<p>(If encounter issues, try <strong>npm install --legacy-peer-deps</strong>)</p>
 <p>3. also, navigate to the the <strong>"server"</strong> directory and run: </p>
 <p><strong>npm install</strong></p>
 <p>4. To start the front, run:</p>
 <p><strong>npm run dev</strong></p>
 <p>5. To start the server, run:</p>
-<p><strong>npm run server</strong></p>
+<p><strong>Nodemon</strong></p>
 
 <h1>API Documentation</h1>
 <h2>API Directory Structure</h2>
