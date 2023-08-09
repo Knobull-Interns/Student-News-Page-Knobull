@@ -1,6 +1,9 @@
 // This is our file for setting up MongoDB database connection with Mongoose and preset
 // the schemas for : user, category, article, and pay.
 
+//require the dotenv for mongodb connection
+require("dotenv").config({ path: __dirname + "/../../.env" });
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const sha1 = require("sha1");
@@ -83,7 +86,7 @@ const initialize = () => {
   });
 };
 
-mongoose.connect("mongodb://127.0.0.1:27017/news");
+mongoose.connect(process.env.MONGO_URI);
 
 const db = mongoose.connection;
 
