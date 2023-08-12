@@ -248,6 +248,14 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      <div style={{textAlign: "center"}}>
+        <h1>Student News</h1>
+        <h3 style={{color: "gray"}}>
+          <em>Browse The Latest News For Students!</em>
+        </h3>
+      </div>
+
       <div className="content">
         <InfiniteScroll
           dataLength={list.length}
