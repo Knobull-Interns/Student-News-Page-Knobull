@@ -95,6 +95,7 @@ export default function Home() {
       </Menu.Item>
     </Menu>
   );
+  const featuredArticle = list.length > 0 ? list[0] : null;
 
   useEffect(() => {
     getClassificationData();
@@ -254,6 +255,29 @@ export default function Home() {
         <h3 style={{color: "gray"}}>
           <em>Browse The Latest News For Students!</em>
         </h3>
+      </div>
+
+      {featuredArticle && (
+        <div>
+          <div className="featured_article" key={featuredArticle._id}>
+            <img
+              className="banner"
+              src={featuredArticle.banner}
+              alt=""
+              onClick={() => articleDetail(featuredArticle)}
+            />
+            <div className="left">
+              <div className="title" onClick={() => articleDetail(featuredArticle)}>
+                {featuredArticle.title}
+              </div>
+              <div className="desc">{featuredArticle.desc}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div style={{textAlign: "center"}}>
+        <h2>Recent Stories</h2>
       </div>
 
       <div className="content">
