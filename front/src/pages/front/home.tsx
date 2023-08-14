@@ -250,7 +250,7 @@ export default function Home() {
         )}
       </div>
 
-      <div style={{textAlign: "center"}}>
+      <div className="center-text">
         <h1>Student News</h1>
         <h3 style={{color: "gray"}}>
           <em>Browse The Latest News For Students!</em>
@@ -259,14 +259,14 @@ export default function Home() {
 
       {featuredArticle && (
         <div>
-          <div className="featured_article" key={featuredArticle._id}>
+          <div className="featured-article" key={featuredArticle._id}>
             <img
               className="banner"
               src={featuredArticle.banner}
               alt=""
               onClick={() => articleDetail(featuredArticle)}
             />
-            <div className="left">
+            <div className="featured-text">
               <div className="title" onClick={() => articleDetail(featuredArticle)}>
                 {featuredArticle.title}
               </div>
@@ -276,7 +276,7 @@ export default function Home() {
         </div>
       )}
 
-      <div style={{textAlign: "center"}}>
+      <div className="center-text" >
         <h2>Recent Stories</h2>
       </div>
 
