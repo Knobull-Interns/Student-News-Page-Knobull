@@ -95,7 +95,17 @@ export default function Home() {
       </Menu.Item>
     </Menu>
   );
-  const featuredArticle = list.length > 0 ? list[0] : null;
+
+  const getRandomFeaturedArticle = () => {
+    const filteredList = list.filter(item => !item.featured);
+    if (filteredList.length > 0) {
+      const randomIndex = Math.floor(Math.random() * filteredList.length);
+      return filteredList[randomIndex];
+    }
+    return null;
+  };
+  const featuredArticle = getRandomFeaturedArticle();
+  
 
   useEffect(() => {
     getClassificationData();
@@ -296,20 +306,22 @@ export default function Home() {
         >
           {list.length > 0 ? (
             list.map((item) => (
-              <div className="article_item" key={item._id}>
-                <div className="left">
-                  <div className="title" onClick={() => articleDetail(item)}>
-                    {item.title}
+              item != featuredArticle && (
+                <div className="article_item" key={item._id}>
+                  <div className="left">
+                    <div className="title" onClick={() => articleDetail(item)}>
+                      {item.title}
+                    </div>
+                    <div className="desc">{item.desc}</div>
                   </div>
-                  <div className="desc">{item.desc}</div>
+                  <img
+                    className="banner"
+                    src={item.banner}
+                    alt=""
+                    onClick={() => articleDetail(item)}
+                  />
                 </div>
-                <img
-                  className="banner"
-                  src={item.banner}
-                  alt=""
-                  onClick={() => articleDetail(item)}
-                />
-              </div>
+              )
             ))
           ) : (
             <div
