@@ -96,6 +96,17 @@ export default function Home() {
     </Menu>
   );
 
+  const getRandomFeaturedArticle = () => {
+    const filteredList = list.filter(item => !item.featured);
+    if (filteredList.length > 0) {
+      const randomIndex = Math.floor(Math.random() * filteredList.length);
+      return filteredList[randomIndex];
+    }
+    return null;
+  };
+  const featuredArticle = getRandomFeaturedArticle();
+  
+
   useEffect(() => {
     getClassificationData();
     setWebUserInfo(getLocalWebUser());
@@ -249,11 +260,34 @@ export default function Home() {
         )}
       </div>
 
-      <div style={{textAlign: "center"}}>
+      <div className="center-text">
         <h1>Student News</h1>
         <h3 style={{color: "gray"}}>
           <em>Browse The Latest News For Students!</em>
         </h3>
+      </div>
+
+      {featuredArticle && (
+        <div>
+          <div className="featured-article" key={featuredArticle._id}>
+            <img
+              className="banner"
+              src={featuredArticle.banner}
+              alt=""
+              onClick={() => articleDetail(featuredArticle)}
+            />
+            <div className="featured-text">
+              <div className="title" onClick={() => articleDetail(featuredArticle)}>
+                {featuredArticle.title}
+              </div>
+              <div className="desc">{featuredArticle.desc}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="center-text" >
+        <h2>Recent Stories</h2>
       </div>
 
       <div className="content">
@@ -272,20 +306,22 @@ export default function Home() {
         >
           {list.length > 0 ? (
             list.map((item) => (
-              <div className="article_item" key={item._id}>
-                <div className="left">
-                  <div className="title" onClick={() => articleDetail(item)}>
-                    {item.title}
+              item != featuredArticle && (
+                <div className="article_item" key={item._id}>
+                  <div className="left">
+                    <div className="title" onClick={() => articleDetail(item)}>
+                      {item.title}
+                    </div>
+                    <div className="desc">{item.desc}</div>
                   </div>
-                  <div className="desc">{item.desc}</div>
+                  <img
+                    className="banner"
+                    src={item.banner}
+                    alt=""
+                    onClick={() => articleDetail(item)}
+                  />
                 </div>
-                <img
-                  className="banner"
-                  src={item.banner}
-                  alt=""
-                  onClick={() => articleDetail(item)}
-                />
-              </div>
+              )
             ))
           ) : (
             <div
